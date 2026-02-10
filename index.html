@@ -130,7 +130,19 @@ button:active { transform: scale(0.96); }
         <label><input type="checkbox" class="salah-check"> Isha</label>
         <label><input type="checkbox" class="salah-check"> Quran</label>
     </div>
-
+<div class="card" style="margin-top: 15px; border-top: 3px solid var(--gold); text-align: center;">
+    <h3 style="color: var(--gold); margin-bottom: 5px;">Daily Dua ✨</h3>
+    <p id="dua-arabic" style="font-size: 22px; font-family: 'Amiri', serif; margin: 10px 0; line-height: 1.6;"></p>
+    <p id="dua-urdu" style="font-size: 16px; color: #ccc; font-style: italic;">Loading blessing...</p>
+    <button onclick="showRandomDua()" style="background: none; border: 1px solid var(--gold); color: var(--gold); padding: 5px 15px; border-radius: 20px; font-size: 12px; cursor: pointer;">Next Dua ↻</button>
+</div>
+  <div class="card" style="margin-top: 10px; background: rgba(255, 211, 105, 0.1);">
+    <p style="margin: 0; font-size: 12px;">Tasbeeh Counter</p>
+    <h1 id="t-count" style="margin: 5px 0;">0</h1>
+    <button onclick="countUp()" style="width: 60px; height: 60px; border-radius: 50%; border: none; background: var(--gold); font-size: 20px; font-weight: bold; cursor: pointer;">+</button>
+    <button onclick="resetCount()" style="display: block; margin: 10px auto; background: none; border: none; color: #ccc; font-size: 11px;">Reset</button>
+</div>
+</div>
     <button class="btn" onclick="startAppFromHome()" style="background: var(--gold); color: #000; padding: 10px 20px; border-radius: 10px; font-weight: bold; border: none; width: 100%;">
         📖 Start Daily Journey
     </button>
@@ -144,7 +156,23 @@ button:active { transform: scale(0.96); }
 <audio id="bgMusic" loop>
    <source src="ramadan.mp3" type="audio/mpeg">
 </audio>
-
+<div id="zakat-section" class="card" style="margin-top: 20px; text-align: center; border-bottom: 3px solid #44ff44;">
+    <h3 style="color: var(--gold); margin-top: 0;">Zakat Calculator 💰</h3>
+    <p style="font-size: 12px; opacity: 0.8; margin-bottom: 15px;">Enter your total savings to calculate 2.5% Zakat.</p>
+    
+    <input type="number" id="zakat-amount" placeholder="Total Amount (e.g. 50000)" 
+           style="width: 80%; padding: 12px; border-radius: 10px; border: 1px solid var(--gold); background: rgba(0,0,0,0.3); color: white; outline: none;">
+    
+    <button onclick="calculateZakat()" 
+            style="margin-top: 15px; background: var(--gold); color: #000; padding: 10px 25px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; width: 85%;">
+        Calculate Now
+    </button>
+    
+    <div id="zakat-result-box" style="margin-top: 15px; display: none; padding: 10px; background: rgba(68, 255, 68, 0.1); border-radius: 8px;">
+        <p style="margin: 0; font-size: 14px;">Your Zakat Amount:</p>
+        <h2 id="zakat-value" style="color: #44ff44; margin: 5px 0;">0</h2>
+    </div>
+</div>
 <script>
 const pages = [
   { title: "Welcome Ramadan 🌙", body: "Ramadan sirf bhook ka nahi, dil ki safai ka mahina hai. Yeh safar Allah ke qareeb anay ka hai 🤍" },
@@ -262,6 +290,20 @@ function startAppFromHome() {
 // Countdown ko har ghante update karne ke liye call karein
 updateCountdown();
 setInterval(updateCountdown, 3600000);
+  function updateTheme() {
+    const today = new Date();
+    const day = today.getDate(); // Ye check karega ke mahine ka kaunsa din hai
+    
+    // Example logic: Date ke hisab se colors badalna
+    if (day >= 18 && day <= 28) { // Pehla Ashra (Feb 18-28)
+        document.body.style.background = "radial-gradient(circle, #1a2a6c, #b21f1f, #fdbb2d)";
+    } else if (day > 28 || day <= 10) { // Dusra Ashra
+        document.body.style.background = "radial-gradient(circle, #0f2027, #203a43, #2c5364)";
+    } else { // Teesra Ashra
+        document.body.style.background = "radial-gradient(circle, #23074d, #cc5333)";
+    }
+}
+updateTheme();
 
 // Checkboxes ko phone ki memory mein save karne ka logic
 const checks = document.querySelectorAll('.salah-check');
@@ -275,13 +317,79 @@ checks.forEach((check, i) => {
         localStorage.setItem('salah-' + i, check.checked);
     };
 });
-// Initial render + setup
+  const dailyDuas = [
+    { ar: "اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي", ur: "Ae Allah! Tu maaf karne wala hai aur maaf karne ko pasand karta hai, pas mujhe maaf farma de." },
+    { ar: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً", ur: "Ae hamare Rabb! Humein duniya mein bhi bhalai de aur aakhirat mein bhi bhalai de." },
+    { ar: "يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ", ur: "Ae dilon ko pherne wale! Mere dil ko apne deen par sabit qadam rakh." },
+    { ar: "اللَّهُمَّ أَجِرْنِي مِنَ النَّارِ", ur: "Ae Allah! Mujhe aag (jahannam) ke azab se mehfooz rakh." },
+    { ar: "رَبِّ اغْفِرْ وَارْحَمْ وَأَنْتَ خَيْرُ الرَّاحِمِينَ", ur: "Ae mere Rabb! Baksh de aur raham farma, Tu sabse behtar raham karne wala hai." },
+    { ar: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ", ur: "Ae Allah! Main Tujh se Jannat ka sawal karta hoon." },
+    { ar: "اللَّهُمَّ بَارِكْ لَنَا فِي رَمَضَانَ", ur: "Ae Allah! Hamare liye Ramadan mein barkat ata farma." },
+    { ar: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ", ur: "Allah pak hai apni tareef ke saath." },
+    { ar: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ", ur: "Gunahon se bachne ki taqat aur neki karne ki quwwat sirf Allah ki taraf se hai." },
+    { ar: "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ", ur: "Main Allah se maafi mangta hoon aur uski taraf ruju karta hoon." },
+    { ar: "اللَّهُمَّ اكْفِنِي بِحَلَالِكَ عَنْ حَرَامِكَ", ur: "Ae Allah! Mujhe apne halal ke zariye haram se bacha kar kafi ho ja." },
+    { ar: "رَبِّ زِدْنِي عِلْمًا", ur: "Ae mere Rabb! Mere ilm mein izafa farma." },
+    { ar: "اللَّهُمَّ عافِني في بَدَني", ur: "Ae Allah! Mere badan mein mujhe afiyat ata farma." },
+    { ar: "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ", ur: "Humein Allah kafi hai aur Wo behtareen kar-saaz hai." },
+    { ar: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحُزْنِ", ur: "Ae Allah! Main fikar aur gham se Teri panah mangta hoon." }
+];
+
+function showRandomDua() {
+    const random = dailyDuas[Math.floor(Math.random() * dailyDuas.length)];
+    document.getElementById('dua-arabic').innerText = random.ar;
+    document.getElementById('dua-urdu').innerText = random.ur;
+}
+
+// Pehli baar load hone par dua dikhayein
+showRandomDua();
+  let count = 0;
+function countUp() {
+    count++;
+    document.getElementById('t-count').innerText = count;
+}
+function resetCount() {
+    count = 0;
+    document.getElementById('t-count').innerText = count;
+}
+// Zakat Calculation Logic
+function calculateZakat() {
+    const amount = document.getElementById('zakat-amount').value;
+    const resultBox = document.getElementById('zakat-result-box');
+    const resultValue = document.getElementById('zakat-value');
+    
+    if (amount > 0) {
+        const zakat = amount * 0.025; // 2.5% Formula
+        resultValue.innerText = zakat.toLocaleString() + " /-";
+        resultBox.style.display = 'block';
+    } else {
+        alert("Please enter a valid amount");
+    }
+}
+
+// Background Theme Change Logic
+function setDailyTheme() {
+    const today = new Date();
+    const date = today.getDate();
+    const body = document.body;
+
+    // Har Ashre ke liye alag gradient colors
+    if (date >= 18 && date <= 28) { // Pehla Ashra (Feb 18-28)
+        body.style.background = "radial-gradient(circle at center, #1a2a6c, #b21f1f, #fdbb2d)"; 
+    } else if (date > 28 || date <= 10) { // Dusra Ashra
+        body.style.background = "radial-gradient(circle at center, #0f2027, #203a43, #2c5364)";
+    } else { // Teesra Ashra
+        body.style.background = "radial-gradient(circle at center, #23074d, #cc5333)";
+    }
+}
+setDailyTheme();// Initial render + setup
 render();
 setDailyReminder();
 </script>
 
 </body>
 </html>
+
 
 
 
