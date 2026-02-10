@@ -290,21 +290,7 @@ function startAppFromHome() {
 // Countdown ko har ghante update karne ke liye call karein
 updateCountdown();
 setInterval(updateCountdown, 3600000);
-  function updateTheme() {
-    const today = new Date();
-    const day = today.getDate(); // Ye check karega ke mahine ka kaunsa din hai
-    
-    // Example logic: Date ke hisab se colors badalna
-    if (day >= 18 && day <= 28) { // Pehla Ashra (Feb 18-28)
-        document.body.style.background = "radial-gradient(circle, #1a2a6c, #b21f1f, #fdbb2d)";
-    } else if (day > 28 || day <= 10) { // Dusra Ashra
-        document.body.style.background = "radial-gradient(circle, #0f2027, #203a43, #2c5364)";
-    } else { // Teesra Ashra
-        document.body.style.background = "radial-gradient(circle, #23074d, #cc5333)";
-    }
-}
-updateTheme();
-
+ 
 // Checkboxes ko phone ki memory mein save karne ka logic
 const checks = document.querySelectorAll('.salah-check');
 checks.forEach((check, i) => {
@@ -389,6 +375,7 @@ setDailyReminder();
 
 </body>
 </html>
+
 
 
 
