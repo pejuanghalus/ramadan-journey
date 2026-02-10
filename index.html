@@ -117,8 +117,25 @@ button:active { transform: scale(0.96); }
 <body>
 
 <div class="bg-glow"></div>
+<div id="home-dashboard" class="card">
+    <h1 style="color: var(--gold);">Ramadan Mubarak 🌙</h1>
+  <p id="countdown" style="font-weight: bold; color: var(--gold); font-size: 18px; margin: 10px 0;"></p>
+    <p>Aaj ki progress aur journey yahan se shuru karein.</p>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0;">
+        <label><input type="checkbox" class="salah-check"> Fajr</label>
+        <label><input type="checkbox" class="salah-check"> Dhuhr</label>
+        <label><input type="checkbox" class="salah-check"> Asr</label>
+        <label><input type="checkbox" class="salah-check"> Maghrib</label>
+        <label><input type="checkbox" class="salah-check"> Isha</label>
+        <label><input type="checkbox" class="salah-check"> Quran</label>
+    </div>
 
-<div class="card">
+    <button class="btn" onclick="startAppFromHome()" style="background: var(--gold); color: #000; padding: 10px 20px; border-radius: 10px; font-weight: bold; border: none; width: 100%;">
+        📖 Start Daily Journey
+    </button>
+</div>
+<div id="main-slides" class="card" style="display: none;">
   <div class="progress-bar" id="bar"></div>
   <button class="audio-toggle" onclick="initApp()" id="audioBtn">🔇</button>
   <div id="content" class="fade"></div>
@@ -221,7 +238,43 @@ function setDailyReminder() {
     }
   }, 60000);
 }
+// Dashboard se slides par jane ka function
+function startAppFromHome() {
+    document.getElementById('home-dashboard').style.display = 'none';
+    document.getElementById('main-slides').style.display = 'block';
+    // Agar koi audio ya initial animation hai toh yahan trigger ho sakti hai
+}
+  function updateCountdown() {
+    const ramadanDate = new Date("February 18, 2026 00:00:00").getTime();
+    const now = new Date().getTime();
+    const diff = ramadanDate - now;
 
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+    const display = document.getElementById("countdown");
+    if (diff > 0) {
+        display.innerHTML = `🌙 ${days} Days & ${hours} Hours until Ramadan`;
+    } else {
+        display.innerHTML = "✨ Ramadan Kareem is Here!";
+    }
+}
+// Countdown ko har ghante update karne ke liye call karein
+updateCountdown();
+setInterval(updateCountdown, 3600000);
+
+// Checkboxes ko phone ki memory mein save karne ka logic
+const checks = document.querySelectorAll('.salah-check');
+checks.forEach((check, i) => {
+    // Purana data load karna
+    const savedState = localStorage.getItem('salah-' + i);
+    if (savedState) check.checked = savedState === 'true';
+    
+    // Naya data save karna jab click ho
+    check.onchange = () => {
+        localStorage.setItem('salah-' + i, check.checked);
+    };
+});
 // Initial render + setup
 render();
 setDailyReminder();
@@ -229,6 +282,7 @@ setDailyReminder();
 
 </body>
 </html>
+
 
 
 
