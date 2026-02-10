@@ -1,0 +1,13 @@
+{
+  "name": "Ramadan Journey",
+  "short_name": "Ramadan",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#16222a",
+  "theme_color": "#ffd369",
+  "icons": [{
+    "src": "icon.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }]
+}
