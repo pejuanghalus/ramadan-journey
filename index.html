@@ -1,196 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramadan Journey | Ultra Pro</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ramadan Journey | Ultra Pro</title>
+    <style>
+        :root {
+            --gold: #ffd369;
+            --glass: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --bg-dark: #0f172a;
+        }
 
-<style>
-:root {
-  --gold: #ffd369;
-  --glass: rgba(255, 255, 255, 0.08);
-  --glass-border: rgba(255, 255, 255, 0.12);
-}
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg-dark);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            /* The gradient will be updated by JS */
+        }
 
-body {
-  margin: 0;
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background: radial-gradient(circle at center, #16222a, #000);
-  color: #fff;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
+        /* Main Wrapper to handle scrolling */
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-sizing: border-box;
+            z-index: 1;
+        }
 
-.bg-glow {
-  position: absolute;
-  width: 300px; height: 300px;
-  background: var(--gold);
-  filter: blur(150px);
-  opacity: 0.1;
-  z-index: -1;
-  animation: pulse 8s infinite alternate;
-}
+        .bg-glow {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px; height: 300px;
+            background: var(--gold);
+            filter: blur(150px);
+            opacity: 0.1;
+            z-index: -1;
+        }
 
-@keyframes pulse {
-  from { transform: scale(1); opacity: 0.1; }
-  to { transform: scale(1.5); opacity: 0.15; }
-}
+        /* Unified Card Style */
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+            position: relative;
+        }
 
-.card {
-  width: 85%;
-  max-width: 400px;
-  background: var(--glass);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  border: 1px solid var(--glass-border);
-  border-radius: 32px;
-  padding: 40px 25px;
-  box-shadow: 0 40px 100px rgba(0,0,0,0.6);
-  position: relative;
-  text-align: center;
-}
+        /* Specific Header adjustments */
+        .header-section h1 { color: var(--gold); margin: 0; font-size: 24px; }
+        #countdown { color: var(--gold); font-size: 14px; margin-top: 5px; opacity: 0.9; }
 
-.audio-toggle {
-  position: absolute;
-  top: 20px; right: 20px;
-  background: none; border: none;
-  color: var(--gold);
-  cursor: pointer;
-  font-size: 22px;
-  opacity: 0.7;
-}
+        /* Grid for Checkboxes */
+        .check-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .check-grid label {
+            background: rgba(255,255,255,0.05);
+            padding: 10px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
 
-.progress-bar {
-  position: absolute;
-  top: 0; left: 0;
-  height: 4px;
-  background: var(--gold);
-  transition: width 0.5s ease;
-}
+        /* Progress Bar for Slides */
+        .progress-bar {
+            height: 4px; background: var(--gold);
+            position: absolute; top: 0; left: 0; border-radius: 24px 24px 0 0;
+            transition: width 0.4s;
+        }
 
-.step-count { font-size: 11px; letter-spacing: 2px; color: var(--gold); opacity: 0.8; }
-h2 { font-size: 1.8rem; margin: 15px 0; }
-.arabic { font-size: 26px; margin: 20px 0; font-family: serif; color: #fff; }
-.urdu { font-size: 16px; color: #ffd369; margin-bottom: 20px; opacity: 0.9; }
-.body-text { font-size: 16px; line-height: 1.6; color: #e0e0e0; min-height: 80px; }
+        .arabic { font-size: 24px; margin: 15px 0; font-family: serif; line-height: 1.8; }
+        .urdu { font-size: 15px; color: var(--gold); margin-bottom: 15px; }
 
-.btn-container { display: flex; flex-direction: column; gap: 10px; margin-top: 30px; }
-.nav-btns { display: flex; gap: 10px; }
+        /* Buttons */
+        button {
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-primary { background: var(--gold); color: #000; width: 100%; }
+        .btn-secondary { background: rgba(255,255,255,0.1); color: #fff; }
+        .btn-next-dua { background: none; border: 1px solid var(--gold); color: var(--gold); font-size: 12px; }
 
-button {
-  padding: 14px;
-  border: none;
-  border-radius: 16px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
+        /* Tasbeeh Circle */
+        .tasbeeh-btn {
+            width: 70px; height: 70px; border-radius: 50%;
+            background: var(--gold); font-size: 24px; margin-top: 10px;
+        }
 
-.btn-next { flex: 2; background: var(--gold); color: #000; }
-.btn-back { flex: 1; background: rgba(255,255,255,0.1); color: #fff; }
-.btn-share { 
-    background: transparent; 
-    border: 1px solid var(--glass-border); 
-    color: #25D366;
-    font-size: 14px;
-}
+        /* Inputs */
+        input[type="number"] {
+            width: 100%; padding: 12px; border-radius: 10px;
+            border: 1px solid var(--glass-border);
+            background: rgba(0,0,0,0.2); color: #fff; box-sizing: border-box;
+        }
 
-button:active { transform: scale(0.96); }
-
-.fade { animation: fadeIn 0.4s ease; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-@media(max-width: 450px){
-  .card { padding: 30px 20px; }
-  h2 { font-size: 1.5rem; }
-  .body-text { font-size: 14px; }
-  .arabic { font-size: 22px; }
-}
-</style>
-  <link rel="manifest" href="manifest.json">
+        .hidden { display: none !important; }
+    </style>
 </head>
 <body>
 
 <div class="bg-glow"></div>
-<div id="home-dashboard" class="card">
-    <h1 style="color: var(--gold);">Ramadan Mubarak 🌙</h1>
-  <p id="countdown" style="font-weight: bold; color: var(--gold); font-size: 18px; margin: 10px 0;"></p>
-    <p>Aaj ki progress aur journey yahan se shuru karein.</p>
+
+<div class="app-container">
     
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0;">
-        <label><input type="checkbox" class="salah-check"> Fajr</label>
-        <label><input type="checkbox" class="salah-check"> Dhuhr</label>
-        <label><input type="checkbox" class="salah-check"> Asr</label>
-        <label><input type="checkbox" class="salah-check"> Maghrib</label>
-        <label><input type="checkbox" class="salah-check"> Isha</label>
-        <label><input type="checkbox" class="salah-check"> Quran</label>
+    <div id="home-dashboard">
+        <div class="card header-section" style="margin-bottom: 20px;">
+            <h1>Ramadan Mubarak 🌙</h1>
+            <p id="countdown"></p>
+        </div>
+
+        <div class="card">
+            <p style="margin-top:0">Daily Progress</p>
+            <div class="check-grid">
+                <label><input type="checkbox" class="salah-check"> Fajr</label>
+                <label><input type="checkbox" class="salah-check"> Dhuhr</label>
+                <label><input type="checkbox" class="salah-check"> Asr</label>
+                <label><input type="checkbox" class="salah-check"> Maghrib</label>
+                <label><input type="checkbox" class="salah-check"> Isha</label>
+                <label><input type="checkbox" class="salah-check"> Quran</label>
+            </div>
+            <button class="btn-primary" onclick="startAppFromHome()">📖 Start Daily Journey</button>
+        </div>
+
+        <div class="card" style="margin-top: 20px;">
+            <h3 style="color: var(--gold); margin: 0;">Daily Dua ✨</h3>
+            <p id="dua-arabic" class="arabic"></p>
+            <p id="dua-urdu" class="urdu"></p>
+            <button class="btn-next-dua" onclick="showRandomDua()">Next Dua ↻</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+            <div class="card" style="padding: 15px;">
+                <p style="font-size: 12px; margin:0">Tasbeeh</p>
+                <h2 id="t-count" style="margin: 5px 0;">0</h2>
+                <button class="tasbeeh-btn" onclick="countUp()">+</button>
+                <button onclick="resetCount()" style="background:none; color:#aaa; font-size:10px; display:block; width:100%; margin-top:5px;">Reset</button>
+            </div>
+            <div class="card" style="padding: 15px; border-bottom: 3px solid #44ff44;">
+                <h4 style="margin:0; color:var(--gold)">Zakat</h4>
+                <input type="number" id="zakat-amount" placeholder="Amount" style="margin: 10px 0; font-size: 12px;">
+                <button onclick="calculateZakat()" class="btn-primary" style="padding: 8px; font-size: 12px;">Calc</button>
+                <div id="zakat-result-box" class="hidden" style="margin-top: 10px; font-size: 12px; color: #44ff44;">
+                    Amt: <span id="zakat-value"></span>
+                </div>
+            </div>
+        </div>
     </div>
-<div class="card" style="margin-top: 15px; border-top: 3px solid var(--gold); text-align: center;">
-    <h3 style="color: var(--gold); margin-bottom: 5px;">Daily Dua ✨</h3>
-    <p id="dua-arabic" style="font-size: 22px; font-family: 'Amiri', serif; margin: 10px 0; line-height: 1.6;"></p>
-    <p id="dua-urdu" style="font-size: 16px; color: #ccc; font-style: italic;">Loading blessing...</p>
-    <button onclick="showRandomDua()" style="background: none; border: 1px solid var(--gold); color: var(--gold); padding: 5px 15px; border-radius: 20px; font-size: 12px; cursor: pointer;">Next Dua ↻</button>
-</div>
-  <div class="card" style="margin-top: 10px; background: rgba(255, 211, 105, 0.1);">
-    <p style="margin: 0; font-size: 12px;">Tasbeeh Counter</p>
-    <h1 id="t-count" style="margin: 5px 0;">0</h1>
-    <button onclick="countUp()" style="width: 60px; height: 60px; border-radius: 50%; border: none; background: var(--gold); font-size: 20px; font-weight: bold; cursor: pointer;">+</button>
-    <button onclick="resetCount()" style="display: block; margin: 10px auto; background: none; border: none; color: #ccc; font-size: 11px;">Reset</button>
-</div>
-</div>
-    <button class="btn" onclick="startAppFromHome()" style="background: var(--gold); color: #000; padding: 10px 20px; border-radius: 10px; font-weight: bold; border: none; width: 100%;">
-        📖 Start Daily Journey
-    </button>
-</div>
-<div id="main-slides" class="card" style="display: none;">
-  <div class="progress-bar" id="bar"></div>
-  <button class="audio-toggle" onclick="initApp()" id="audioBtn">🔇</button>
-  <div id="content" class="fade"></div>
+
+    <div id="main-slides" class="card hidden">
+        <div class="progress-bar" id="bar"></div>
+        <div id="content"></div>
+    </div>
+
 </div>
 
 <audio id="bgMusic" loop>
    <source src="ramadan.mp3" type="audio/mpeg">
 </audio>
-<div id="zakat-section" class="card" style="margin-top: 20px; text-align: center; border-bottom: 3px solid #44ff44;">
-    <h3 style="color: var(--gold); margin-top: 0;">Zakat Calculator 💰</h3>
-    <p style="font-size: 12px; opacity: 0.8; margin-bottom: 15px;">Enter your total savings to calculate 2.5% Zakat.</p>
-    
-    <input type="number" id="zakat-amount" placeholder="Total Amount (e.g. 50000)" 
-           style="width: 80%; padding: 12px; border-radius: 10px; border: 1px solid var(--gold); background: rgba(0,0,0,0.3); color: white; outline: none;">
-    
-    <button onclick="calculateZakat()" 
-            style="margin-top: 15px; background: var(--gold); color: #000; padding: 10px 25px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; width: 85%;">
-        Calculate Now
-    </button>
-    
-    <div id="zakat-result-box" style="margin-top: 15px; display: none; padding: 10px; background: rgba(68, 255, 68, 0.1); border-radius: 8px;">
-        <p style="margin: 0; font-size: 14px;">Your Zakat Amount:</p>
-        <h2 id="zakat-value" style="color: #44ff44; margin: 5px 0;">0</h2>
-    </div>
-</div>
+
 <script>
+// --- DATA ---
 const pages = [
   { title: "Welcome Ramadan 🌙", body: "Ramadan sirf bhook ka nahi, dil ki safai ka mahina hai. Yeh safar Allah ke qareeb anay ka hai 🤍" },
-  { title: "Gunahon ki Maafi ✨🙏💖", body: "Nabi ﷺ ne farmaya: Jis ne Ramadan ke roze imaan aur sawab ki niyyat se rakhe, us ke pichle tamam gunah maaf kar diye jayenge. (Sahih Bukhari: 38) 🌙🤍" },
-  { title: "Ar-Rayyan 🚪", body: "Hadees: Rasool Allah ﷺ ne farmaya: Jannat ka ek darwaza hai jise 'Ar-Rayyan' kaha jata hai. Qayamat ke din us se sirf rozedar hi dakhil honge... jab wo dakhil ho jayenge to wo darwaza band kar diya jayega. 🌿" },
-  { title: "Our Mission 🌱", body: "Is Ramadan hum apni aadatain nahi, apni soch aur rawaiya badlain ge." },
-  { title: "Allah’s Message 📖", arabic: "لَعَلَّكُمْ تَتَّقُونَ", urdu: "تاکہ تم تقویٰ اختیار کرو", body: "Ramadan ka goal sirf khany py control nahi, balkay taqwa hai — har waqt ALLAH ki yad ma masrof rehna ha" },
-  { title: "Things To Do ✅", body: "Narmi, sabr, Qur’an, aur choti choti nekian — yehi Ramadan ki khoobsurti hai." },
-  { title: "The Prophet ﷺ Said", arabic: "فَلَيْسَ لِلَّهِ حَاجَةٌ", urdu: "اللہ کو اس کے بھوکا رہنے کی حاجت نہیں", body: "Roza sirf pait ka nahi, zaban aur rawaiya ka bhi hota hai." },
-  { title: "The Change 🌿", body: "Ramadan humein yaad dilata hai ke hum Allah ke baghair adhooray hain." },
-  { title: "Allah ka Khas Inaam 🎁", body: "Ek Hadees-e-Qudsi mein Allah Ta'ala farmata hai: 'Roza mere liye hai aur Main hi is ka badla doonga. (Sahih Bukhari: 1894). Yaani Allah ne iska sawab farishton par bhi zahir nahi kiya, wo khud apni shaan ke mutabiq ata farmayega." },
-  { title: "A Small Dua 🤲", body: "Ya Allah, is Ramadan ko hamari zindagi ka turning point bana de. Ameen 🤍" },
-  { title: "😊", body: "Thanks for reading 🌟 Share with your friends!, may ALLAh fulfill your good wishes and May ALLAH forgive us all and accept our worship ✨Ameen, remember me in your prayers 🤍" }
+  { title: "Gunahon ki Maafi ✨", body: "Nabi ﷺ ne farmaya: Jis ne Ramadan ke roze imaan aur sawab ki niyyat se rakhe, us ke pichle tamam gunah maaf kar diye jayenge. (Sahih Bukhari: 38) 🌙🤍" },
+  { title: "Ar-Rayyan 🚪", body: "Hadees: Rasool Allah ﷺ ne farmaya: Jannat ka ek darwaza hai jise 'Ar-Rayyan' kaha jata hai. Qayamat ke din us se sirf rozedar hi dakhil honge... 🌿" },
+  { title: "Allah’s Message 📖", arabic: "لَعَلَّكُمْ تَتَّقُونَ", urdu: "تاکہ تم تقویٰ اختیار کرو", body: "Ramadan ka goal sirf khany py control nahi, balkay taqwa hai." },
+  { title: "Done! 🌟", body: "May Allah accept our worship. Ameen. Share this with friends!" }
+];
+
+const dailyDuas = [
+    { ar: "اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي", ur: "Ae Allah! Tu maaf karne wala hai..." },
+    { ar: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً", ur: "Ae hamare Rabb! Humein duniya mein bhalai de..." },
+    { ar: "يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي", ur: "Ae dilon ko pherne wale! Mere dil ko sabit qadam rakh." }
 ];
 
 let index = 0;
-let isPlaying = false;
-const audio = document.getElementById("bgMusic");
+let count = 0;
+
+// --- FUNCTIONS ---
 
 function render() {
   const p = pages[index];
@@ -198,128 +210,45 @@ function render() {
   const isFirst = index === 0;
 
   document.getElementById("bar").style.width = `${((index + 1) / pages.length) * 100}%`;
-
   document.getElementById("content").innerHTML = `
-    <div class="fade">
-      <span class="step-count">STEP ${index + 1} OF ${pages.length}</span>
-      <h2>${p.title}</h2>
+    <div style="padding-top: 10px;">
+      <small style="color:var(--gold)">STEP ${index + 1} OF ${pages.length}</small>
+      <h2 style="margin: 15px 0;">${p.title}</h2>
       ${p.arabic ? `<div class="arabic">${p.arabic}</div>` : ""}
       ${p.urdu ? `<div class="urdu">${p.urdu}</div>` : ""}
-      <div class="body-text">${p.body}</div>
-      <div class="btn-container">
-        <div class="nav-btns">
-          ${!isFirst ? `<button class="btn-back" onclick="changePage(-1)">←</button>` : ""}
-          <button class="btn-next" onclick="${isLast ? 'restart()' : 'changePage(1)'}">
-            ${isLast ? 'Restart ↺' : 'Continue ➜'}
+      <p style="line-height:1.6; color:#ddd; font-size:14px;">${p.body}</p>
+      <div style="display:flex; gap:10px; margin-top:20px;">
+          ${!isFirst ? `<button class="btn-secondary" style="flex:1" onclick="changePage(-1)">Back</button>` : ""}
+          <button class="btn-primary" style="flex:2" onclick="${isLast ? 'exitSlides()' : 'changePage(1)'}">
+            ${isLast ? 'Finish 🏁' : 'Continue ➜'}
           </button>
-        </div>
-        <button class="btn-share" onclick="shareWhatsApp()">Share on WhatsApp 📱</button>
       </div>
     </div>
   `;
 }
 
-// Navigation functions
 function changePage(n) { index += n; render(); }
-function restart() { index = 0; render(); }
 
-// Audio toggle + init app
-function toggleAudio() {
-  isPlaying ? audio.pause() : audio.play();
-  isPlaying = !isPlaying;
-  document.getElementById("audioBtn").innerText = isPlaying ? "🔊" : "🔇";
-}
-
-// Init app with audio + notifications
-function initApp() {
-  toggleAudio();
-  requestNotificationPermission();
-}
-
-// WhatsApp Share
-function shareWhatsApp() {
-  const text = `*${pages[index].title}*\n${pages[index].body}\n\n_Sent via Ramadan Journey App_`;
-  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-}
-
-// Notifications
-function requestNotificationPermission() {
-  if ("Notification" in window) {
-    Notification.requestPermission().then(permission => {
-      if (permission === "granted") console.log("Notification permission granted!");
-    });
-  }
-}
-
-function setDailyReminder() {
-  const reminderTime = "18:00"; // 6 PM
-  setInterval(() => {
-    const now = new Date();
-    const currentTime =
-      now.getHours().toString().padStart(2,'0') + ":" +
-      now.getMinutes().toString().padStart(2,'0');
-    if (currentTime === reminderTime) {
-      new Notification("🌙 Ramadan Journey Reminder", {
-        body: "Take a moment for today's reflection. Open your journey card.",
-        icon: "https://cdn-icons-png.flaticon.com/512/2319/2319833.png"
-      });
-    }
-  }, 60000);
-}
-// Dashboard se slides par jane ka function
 function startAppFromHome() {
-    document.getElementById('home-dashboard').style.display = 'none';
-    document.getElementById('main-slides').style.display = 'block';
-    // Agar koi audio ya initial animation hai toh yahan trigger ho sakti hai
+    document.getElementById('home-dashboard').classList.add('hidden');
+    document.getElementById('main-slides').classList.remove('hidden');
+    index = 0;
+    render();
 }
-  function updateCountdown() {
+
+function exitSlides() {
+    document.getElementById('home-dashboard').classList.remove('hidden');
+    document.getElementById('main-slides').classList.add('hidden');
+}
+
+function updateCountdown() {
     const ramadanDate = new Date("February 18, 2026 00:00:00").getTime();
     const now = new Date().getTime();
     const diff = ramadanDate - now;
-
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
-    const display = document.getElementById("countdown");
-    if (diff > 0) {
-        display.innerHTML = `🌙 ${days} Days & ${hours} Hours until Ramadan`;
-    } else {
-        display.innerHTML = "✨ Ramadan Kareem is Here!";
-    }
+    document.getElementById("countdown").innerHTML = diff > 0 ? `🌙 ${days} Days & ${hours} Hours until Ramadan` : "✨ Ramadan Kareem!";
 }
-// Countdown ko har ghante update karne ke liye call karein
-updateCountdown();
-setInterval(updateCountdown, 3600000);
- 
-// Checkboxes ko phone ki memory mein save karne ka logic
-const checks = document.querySelectorAll('.salah-check');
-checks.forEach((check, i) => {
-    // Purana data load karna
-    const savedState = localStorage.getItem('salah-' + i);
-    if (savedState) check.checked = savedState === 'true';
-    
-    // Naya data save karna jab click ho
-    check.onchange = () => {
-        localStorage.setItem('salah-' + i, check.checked);
-    };
-});
-  const dailyDuas = [
-    { ar: "اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي", ur: "Ae Allah! Tu maaf karne wala hai aur maaf karne ko pasand karta hai, pas mujhe maaf farma de." },
-    { ar: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً", ur: "Ae hamare Rabb! Humein duniya mein bhi bhalai de aur aakhirat mein bhi bhalai de." },
-    { ar: "يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ", ur: "Ae dilon ko pherne wale! Mere dil ko apne deen par sabit qadam rakh." },
-    { ar: "اللَّهُمَّ أَجِرْنِي مِنَ النَّارِ", ur: "Ae Allah! Mujhe aag (jahannam) ke azab se mehfooz rakh." },
-    { ar: "رَبِّ اغْفِرْ وَارْحَمْ وَأَنْتَ خَيْرُ الرَّاحِمِينَ", ur: "Ae mere Rabb! Baksh de aur raham farma, Tu sabse behtar raham karne wala hai." },
-    { ar: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ", ur: "Ae Allah! Main Tujh se Jannat ka sawal karta hoon." },
-    { ar: "اللَّهُمَّ بَارِكْ لَنَا فِي رَمَضَانَ", ur: "Ae Allah! Hamare liye Ramadan mein barkat ata farma." },
-    { ar: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ", ur: "Allah pak hai apni tareef ke saath." },
-    { ar: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ", ur: "Gunahon se bachne ki taqat aur neki karne ki quwwat sirf Allah ki taraf se hai." },
-    { ar: "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ", ur: "Main Allah se maafi mangta hoon aur uski taraf ruju karta hoon." },
-    { ar: "اللَّهُمَّ اكْفِنِي بِحَلَالِكَ عَنْ حَرَامِكَ", ur: "Ae Allah! Mujhe apne halal ke zariye haram se bacha kar kafi ho ja." },
-    { ar: "رَبِّ زِدْنِي عِلْمًا", ur: "Ae mere Rabb! Mere ilm mein izafa farma." },
-    { ar: "اللَّهُمَّ عافِني في بَدَني", ur: "Ae Allah! Mere badan mein mujhe afiyat ata farma." },
-    { ar: "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ", ur: "Humein Allah kafi hai aur Wo behtareen kar-saaz hai." },
-    { ar: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحُزْنِ", ur: "Ae Allah! Main fikar aur gham se Teri panah mangta hoon." }
-];
 
 function showRandomDua() {
     const random = dailyDuas[Math.floor(Math.random() * dailyDuas.length)];
@@ -327,58 +256,30 @@ function showRandomDua() {
     document.getElementById('dua-urdu').innerText = random.ur;
 }
 
-// Pehli baar load hone par dua dikhayein
-showRandomDua();
-  let count = 0;
-function countUp() {
-    count++;
-    document.getElementById('t-count').innerText = count;
-}
-function resetCount() {
-    count = 0;
-    document.getElementById('t-count').innerText = count;
-}
-// Zakat Calculation Logic
 function calculateZakat() {
     const amount = document.getElementById('zakat-amount').value;
-    const resultBox = document.getElementById('zakat-result-box');
-    const resultValue = document.getElementById('zakat-value');
-    
     if (amount > 0) {
-        const zakat = amount * 0.025; // 2.5% Formula
-        resultValue.innerText = zakat.toLocaleString() + " /-";
-        resultBox.style.display = 'block';
-    } else {
-        alert("Please enter a valid amount");
+        document.getElementById('zakat-value').innerText = (amount * 0.025).toLocaleString();
+        document.getElementById('zakat-result-box').classList.remove('hidden');
     }
 }
 
-// Background Theme Change Logic
-function setDailyTheme() {
-    const today = new Date();
-    const date = today.getDate();
-    const body = document.body;
+function countUp() { count++; document.getElementById('t-count').innerText = count; }
+function resetCount() { count = 0; document.getElementById('t-count').innerText = count; }
 
-    // Har Ashre ke liye alag gradient colors
-    if (date >= 18 && date <= 28) { // Pehla Ashra (Feb 18-28)
-        body.style.background = "radial-gradient(circle at center, #1a2a6c, #b21f1f, #fdbb2d)"; 
-    } else if (date > 28 || date <= 10) { // Dusra Ashra
-        body.style.background = "radial-gradient(circle at center, #0f2027, #203a43, #2c5364)";
-    } else { // Teesra Ashra
-        body.style.background = "radial-gradient(circle at center, #23074d, #cc5333)";
-    }
-}
-setDailyTheme();// Initial render + setup
-render();
-setDailyReminder();
+// --- INIT ---
+updateCountdown();
+showRandomDua();
+setInterval(updateCountdown, 3600000);
+
+// Load Checkboxes
+const checks = document.querySelectorAll('.salah-check');
+checks.forEach((check, i) => {
+    const saved = localStorage.getItem('salah-' + i);
+    if (saved) check.checked = saved === 'true';
+    check.onchange = () => localStorage.setItem('salah-' + i, check.checked);
+});
+
 </script>
-
 </body>
 </html>
-
-
-
-
-
-
-
