@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ramadan Journey</title>
+    <title>Ramadan Journey🌙</title>
 
     <style>
         :root {
@@ -243,35 +243,100 @@
 const pages = [
   { title: "Welcome Ramadan 🌙", body: "Ramadan sirf bhook ka nahi, dil ki safai ka mahina hai. Yeh safar Allah ke qareeb anay ka hai 🤍" },
   { title: "Gunahon ki Maafi ✨🙏💖", body: "Nabi ﷺ ne farmaya: Jis ne Ramadan ke roze imaan aur sawab ki niyyat se rakhe, us ke pichle tamam gunah maaf kar diye jayenge. (Sahih Bukhari: 38) 🌙🤍" },
-  { title: "Ar-Rayyan 🚪", body: "Hadees: Rasool Allah ﷺ ne farmaya: Jannat ka ek darwaza hai jise 'Ar-Rayyan' kaha jata hai. Qayamat ke din us se sirf rozedar hi dakhil honge..." },
+  { title: "Ar-Rayyan 🚪", body: "Hadees: Rasool Allah ﷺ ne farmaya: Jannat ka ek darwaza hai jise 'Ar-Rayyan' kaha jata hai. Qayamat ke din us se sirf rozedar hi dakhil honge... jab wo dakhil ho jayenge to wo darwaza band kar diya jayega. 🌿" },
   { title: "Our Mission 🌱", body: "Is Ramadan hum apni aadatain nahi, apni soch aur rawaiya badlain ge." },
-  { title: "Allah’s Message 📖", arabic: "لَعَلَّكُمْ تَتَّقُونَ", urdu: "تاکہ تم تقویٰ اختیار کرو", body: "Ramadan ka goal sirf khany py control nahi, balkay taqwa hai." },
-  { title: "A Small Dua 🤲", body: "Ya Allah, is Ramadan ko hamari zindagi ka turning point bana de. Ameen 🤍" }
+  { title: "Allah’s Message 📖", arabic: "لَعَلَّكُمْ تَتَّقُونَ", urdu: "تاکہ تم تقویٰ اختیار کرو", body: "Ramadan ka goal sirf khany py control nahi, balkay taqwa hai — har waqt ALLAH ki yad ma masrof rehna ha" },
+  { title: "Things To Do ✅", body: "Narmi, sabr, Qur’an, aur choti choti nekian — yehi Ramadan ki khoobsurti hai." },
+  { title: "The Prophet ﷺ Said", arabic: "فَلَيْسَ لِلَّهِ حَاجَةٌ", urdu: "اللہ کو اس کے بھوکا رہنے کی حاجت نہیں", body: "Roza sirf pait ka nahi, zaban aur rawaiya ka bhi hota hai." },
+  { title: "The Change 🌿", body: "Ramadan humein yaad dilata hai ke hum Allah ke baghair adhooray hain." },
+  { title: "Allah ka Khas Inaam 🎁", body: "Ek Hadees-e-Qudsi mein Allah Ta'ala farmata hai: 'Roza mere liye hai aur Main hi is ka badla doonga. (Sahih Bukhari: 1894). Yaani Allah ne iska sawab farishton par bhi zahir nahi kiya, wo khud apni shaan ke mutabiq ata farmayega." },
+  { title: "A Small Dua 🤲", body: "Ya Allah, is Ramadan ko hamari zindagi ka turning point bana de. Ameen 🤍" },
+  { title: "😊", body: "Thanks for reading 🌟 Share with your friends!, may ALLAh fulfill your good wishes and May ALLAH forgive us all and accept our worship ✨Ameen, remember me in your prayers 🤍" }
 ];
 
 const dailyDuas = [
-    { ar: "اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي", ur: "Ae Allah! Tu maaf karne wala hai aur maaf karne ko pasand karta hai." },
-    { ar: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً", ur: "Ae hamare Rabb! Humein duniya mein bhi bhalai de aur aakhirat mein bhi bhalai de." }
+    { ar: "اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي", ur: "Ae Allah! Tu maaf karne wala hai aur maaf karne ko pasand karta hai, pas mujhe maaf farma de." },
+    { ar: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً", ur: "Ae hamare Rabb! Humein duniya mein bhi bhalai de aur aakhirat mein bhi bhalai de." },
+    { ar: "يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ", ur: "Ae dilon ko pherne wale! Mere dil ko apne deen par sabit qadam rakh." },
+    { ar: "اللَّهُمَّ أَجِرْنِي مِنَ النَّارِ", ur: "Ae Allah! Mujhe aag (jahannam) ke azab se mehfooz rakh." },
+    { ar: "رَبِّ اغْفِرْ وَارْحَمْ وَأَنْتَ خَيْرُ الرَّاحِمِينَ", ur: "Ae mere Rabb! Baksh de aur raham farma, Tu sabse behtar raham karne wala hai." },
+    { ar: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ", ur: "Ae Allah! Main Tujh se Jannat ka sawal karta hoon." },
+    { ar: "اللَّهُمَّ بَارِكْ لَنَا فِي رَمَضَانَ", ur: "Ae Allah! Hamare liye Ramadan mein barkat ata farma." },
+    { ar: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ", ur: "Allah pak hai apni tareef ke saath." },
+    { ar: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ", ur: "Gunahon se bachne ki taqat aur neki karne ki quwwat sirf Allah ki taraf se hai." },
+    { ar: "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ", ur: "Main Allah se maafi mangta hoon aur uski taraf ruju karta hoon." },
+    { ar: "اللَّهُمَّ اكْفِنِي بِحَلَالِكَ عَنْ حَرَامِكَ", ur: "Ae Allah! Mujhe apne halal ke zariye haram se bacha kar kafi ho ja." },
+    { ar: "رَبِّ زِدْنِي عِلْمًا", ur: "Ae mere Rabb! Mere ilm mein izafa farma." },
+    { ar: "اللَّهُمَّ عافِني في بَدَني", ur: "Ae Allah! Mere badan mein mujhe afiyat ata farma." },
+    { ar: "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ", ur: "Humein Allah kafi hai aur Wo behtareen kar-saaz hai." },
+    { ar: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحُزْنِ", ur: "Ae Allah! Main fikar aur gham se Teri panah mangta hoon." }
+
 ];
 
 const ramadanTasks = [
     "Recite 1 page of Quran with Translation 📖",
     "Feed a needy person or give some Sadaqah 🍯",
     "Call a relative you haven't spoken to lately 📞",
-    "Offer 2 Rakat Tahajjud or Nafil prayers 🌙"
+    "Offer 2 Rakat Tahajjud or Nafil prayers 🌙",
+    "Learn 1 new Name of Allah with meaning ✨",
+    "Avoid unnecessary social media scrolling today 📱",
+    "Prepare a small Iftar item for a neighbor 🍲",
+    "Make special Dua for the Ummah before Iftar 🤲",
+    "Listen to an Islamic lecture for 10 minutes 🎧",
+    "Practice patience and avoid getting angry today 😊"
 ];
 
 const fullNamesList = [
-    { ar: "ٱلْرَّحْمَنُ", en: "Ar-Rahman" }, { ar: "ٱلْرَّحِيْمُ", en: "Ar-Raheem" },
-    { ar: "ٱلْمَلِكُ", en: "Al-Malik" }, { ar: "ٱلْقُدُّوسُ", en: "Al-Quddus" },
-    { ar: "ٱلْسَّلَامُ", en: "As-Salam" }, { ar: "ٱلْمُؤْمِنُ", en: "Al-Mu'min" },
-    { ar: "ٱلْمُهَيْمِنُ", en: "Al-Muhaymin" }, { ar: "ٱلْعَزِيزُ", en: "Al-Aziz" },
-    { ar: "ٱلْجَبَّارُ", en: "Al-Jabbar" }, { ar: "ٱلْمُتَكَبِّرُ", en: "Al-Mutakabbir" },
-    { ar: "ٱلْخَالِقُ", en: "Al-Khaliq" }, { ar: "ٱلْبَارِئُ", en: "Al-Bari'" },
-    { ar: "ٱلْمُصَوِّرُ", en: "Al-Musawwir" }, { ar: "ٱلْغَفَّارُ", en: "Al-Ghaffar" },
-    { ar: "ٱلْقَهَّارُ", en: "Al-Qahhar" }, { ar: "ٱلْوَهَّابُ", en: "Al-Wahhab" },
-    { ar: "ٱلْرَّزَّاقُ", en: "Ar-Razzaq" }, { ar: "ٱلْفَتَّاحُ", en: "Al-Fattah" },
-    { ar: "ٱلْعَلِيمُ", en: "Al-Alim" }, { ar: "ٱلْقَابِضُ", en: "Al-Qabid" }
+    { ar: "ٱلْرَّحْمَنُ", en: "Ar-Rahman", ur: "بڑا مہربان" }, { ar: "ٱلْرَّحِيْمُ", en: "Ar-Raheem", ur: "نہایت رحم والا" },
+    { ar: "ٱلْمَلِكُ", en: "Al-Malik", ur: "حقیقی بادشاہ" }, { ar: "ٱلْقُدُّوسُ", en: "Al-Quddus", ur: "نہایت پاک" },
+    { ar: "ٱلْسَّلَامُ", en: "As-Salam", ur: "سلامتی والا" }, { ar: "ٱلْمُؤْمِنُ", en: "Al-Mu'min", ur: "امن دینے والا" },
+    { ar: "ٱلْمُهَيْمِنُ", en: "Al-Muhaymin", ur: "نگہبان" }, { ar: "ٱلْعَزِيزُ", en: "Al-Aziz", ur: "غالب اور عزت والا" },
+    { ar: "ٱلْجَبَّارُ", en: "Al-Jabbar", ur: "زبردست" }, { ar: "ٱلْمُتَكَبِّرُ", en: "Al-Mutakabbir", ur: "بڑائی والا" },
+    { ar: "ٱلْخَالِقُ", en: "Al-Khaliq", ur: "پیدا کرنے والا" }, { ar: "ٱلْبَارِئُ", en: "Al-Bari'", ur: "ٹھیک بنانے والا" },
+    { ar: "ٱلْمُصَوِّرُ", en: "Al-Musawwir", ur: "صورت گری کرنے والا" }, { ar: "ٱلْغَفَّارُ", en: "Al-Ghaffar", ur: "بہت بخشنے والا" },
+    { ar: "ٱلْقَهَّارُ", en: "Al-Qahhar", ur: "سب پر غالب" }, { ar: "ٱلْوَهَّابُ", en: "Al-Wahhab", ur: "بہت دینے والا" },
+    { ar: "ٱلْرَّزَّاقُ", en: "Ar-Razzaq", ur: "رزق دینے والا" }, { ar: "ٱلْفَتَّاحُ", en: "Al-Fattah" , ur: "مشکل کشا" },
+    { ar: "ٱلْعَلِيمُ", en: "Al-Alim", ur: "سب کچھ جاننے والا" }, { ar: "ٱلْقَابِضُ", en: "Al-Qabid", ur: "تنگی کرنے والا" },
+    { ar: "ٱلْبَاسِطُ", en: "Al-Basit", ur: "فراخی کرنے والا" }, { ar: "ٱلْخَافِضُ", en: "Al-Khafid", ur: "پست کرنے والا" },
+    { ar: "ٱلْرَّافِعُ", en: "Ar-Rafi", ur: "بلند کرنے والا" }, { ar: "ٱلْمُعِزُّ", en: "Al-Mu'izz", ur: "عزت دینے والا" },
+    { ar: "ٱلْمُذِلُّ", en: "Al-Mudhill", ur: "ذلت دینے والا" }, { ar: "ٱلْسَّمِيعُ", en: "As-Sami", ur: "سب کچھ سننے والا" },
+    { ar: "ٱلْبَصِيرُ", en: "Al-Basir", ur: "سب کچھ دیکھنے والا" }, { ar: "ٱلْحَكَمُ", en: "Al-Hakam", ur: "فیصلہ کرنے والا" },
+    { ar: "ٱلْعَدْلُ", en: "Al-Adl", ur: "سراپا عدل" }, { ar: "ٱلْلَّطِيفُ", en: "Al-Latif", ur: "مہربان" },
+    { ar: "ٱلْخَبِيرُ", en: "Al-Khabir", ur: "باخبر" }, { ar: "ٱلْحَلِيمُ", en: "Al-Halim", ur: "بردبار" },
+    { ar: "ٱلْعَظِيمُ", en: "Al-Azim", ur: "عظمت والا" }, { ar: "ٱلْغَفُورُ", en: "Al-Ghafur", ur: "درگزر کرنے والا" },
+    { ar: "ٱلْشَّكُورُ", en: "Ash-Shakur", ur: "قدر دان" }, { ar: "ٱلْعَلِيُّ", en: "Al-Ali", ur: "بہت بلند" },
+    { ar: "ٱلْكَبِيرُ", en: "Al-Kabir", ur: "بہت بڑا" }, { ar: "ٱلْحَفِيظُ", en: "Al-Hafiz", ur: "حفاظت کرنے والا" },
+    { ar: "ٱلْمُقِيتُ", en: "Al-Muqit", ur: "توانائی دینے والا" }, { ar: "ٱلْحَسِيبُ", en: "Al-Hasib", ur: "کفایت کرنے والا" },
+    { ar: "ٱلْجَلِيلُ", en: "Al-Jalil", ur: "بزرگی والا" }, { ar: "ٱلْكَرِيمُ", en: "Al-Karim", ur: "کرم کرنے والا" },
+    { ar: "ٱلْرَّقِيبُ", en: "Ar-Raqib", ur: "نگہبان" }, { ar: "ٱلْمُجِيبُ", en: "Al-Mujib", ur: "قبول کرنے والا" },
+    { ar: "ٱلْوَاسِعُ", en: "Al-Wasi", ur: "وسعت والا" }, { ar: "ٱلْحَكِيمُ", en: "Al-Hakim", ur: "حکمت والا" },
+    { ar: "ٱلْوَدُودُ", en: "Al-Wadud", ur: "محبت کرنے والا" }, { ar: "ٱلْمَجِيدُ", en: "Al-Majid", ur: "بزرگی والا" },
+    { ar: "ٱلْبَاعِثُ", en: "Al-Ba'ith", ur: "دوبارہ زندہ کرنے والا" }, { ar: "ٱلْشَّهِيدُ", en: "Ash-Shahid", ur: "گواہ" },
+    { ar: "ٱلْحَقُّ", en: "Al-Haqq", ur: "برحق" }, { ar: "ٱلْوَكِيلُ", en: "Al-Wakil", ur: "کارساز" },
+    { ar: "ٱلْقَوِيُّ", en: "Al-Qawwi", ur: "طاقتور" }, { ar: "ٱلْمَتِينُ", en: "Al-Matin", ur: "مضبوط" },
+    { ar: "ٱلْوَلِيُّ", en: "Al-Wali", ur: "دوست" }, { ar: "ٱلْحَمِيدُ", en: "Al-Hamid", ur: "قابلِ تعریف" },
+    { ar: "ٱلْمُحْصِيُ", en: "Al-Muhsi", ur: "گننے والا" }, { ar: "ٱلْمُبْدِئُ", en: "Al-Mubdi", ur: "پہلی بار پیدا کرنے والا" },
+    { ar: "ٱلْمُعِيدُ", en: "Al-Mu'id", ur: "دوبارہ پیدا کرنے والا" }, { ar: "ٱلْمُحْيِي", en: "Al-Muhyi", ur: "زندہ کرنے والا" },
+    { ar: "ٱلْمُمِيتُ", en: "Al-Mumit", ur: "موت دینے والا" }, { ar: "ٱلْحَيُّ", en: "Al-Hayy", ur: "ہمیشہ زندہ رہنے والا" },
+    { ar: "ٱلْقَيُّومُ", en: "Al-Qayyum", ur: "سب کو سنبھالنے والا" }, { ar: "ٱلْوَاجِدُ", en: "Al-Wajid", ur: "پانے والا" },
+    { ar: "ٱلْمَاجِدُ", en: "Al-Majid", ur: "بزرگی والا" }, { ar: "ٱلْوَاحِدُ", en: "Al-Wahid", ur: "ایک" },
+    { ar: "ٱلْأَحَدُ", en: "Al-Ahad", ur: "یکتا" }, { ar: "ٱلْصَّمَدُ", en: "As-Samad", ur: "بے نیاز" },
+    { ar: "ٱلْقَادِرُ", en: "Al-Qadir", ur: "قدرت رکھنے والا" }, { ar: "ٱلْمُقْتَدِرُ", en: "Al-Muqtadir", ur: "مقتدر" },
+    { ar: "ٱلْمُقَدِّمُ", en: "Al-Muqaddim", ur: "آگے کرنے والا" }, { ar: "ٱلْمُؤَخِّرُ", en: "Al-Mu'akhkhir", ur: "پیچھے کرنے والا" },
+    { ar: "ٱلأَوَّلُ", en: "Al-Awwal", ur: "سب سے پہلا" }, { ar: "ٱلْآخِرُ", en: "Al-Akhir", ur: "سب سے آخری" },
+    { ar: "ٱلْظَّاهِرُ", en: "Az-Zahir", ur: "ظاہر" }, { ar: "ٱلْبَاطِنُ", en: "Al-Batin", ur: "پوشیدہ" },
+    { ar: "ٱلْوَالِي", en: "Al-Wali", ur: "مالک" }, { ar: "ٱلْمُتَعَالِي", en: "Al-Muta'ali", ur: "سب سے بلند" },
+    { ar: "ٱلْبَرُّ", en: "Al-Barr", ur: "نیکی کا سرچشمہ" }, { ar: "ٱلْتَّوَّابُ", en: "At-Tawwab", ur: "توبہ قبول کرنے والا" },
+    { ar: "ٱلْمُنْتَقِمُ", en: "Al-Muntaqim", ur: "بدلہ لینے والا" }, { ar: "ٱلْعَفُوُّ", en: "Al-Afu", ur: "معاف کرنے والا" },
+    { ar: "ٱلْرَّؤُوفُ", en: "Ar-Ra'uf", ur: "شفقت کرنے والا" }, { ar: "مَالِكُ ٱلْمُلْكِ", en: "Malik-ul-Mulk", ur: "کائنات کا مالک" },
+    { ar: "ذُو ٱلْجَلَالِ وَٱلْإِكْرَامِ", en: "Dhul-Jalali wal-Ikram", ur: "جلال اور انعام والا" }, { ar: "ٱلْمُقْسِطُ", en: "Al-Muqsit", ur: "انصاف کرنے والا" },
+    { ar: "ٱلْجَامِعُ", en: "Al-Jami", ur: "جمع کرنے والا" }, { ar: "ٱلْغَنِيُّ", en: "Al-Ghani", ur: "بے نیاز" },
+    { ar: "ٱلْمُغْنِيُّ", en: "Al-Mughni", ur: "مالدار کرنے والا" }, { ar: "ٱلْمَانِعُ", en: "Al-Mani", ur: "روکنے والا" },
+    { ar: "ٱلْضَّارُّ", en: "Ad-Darr", ur: "نقصان پہنچانے والا" }, { ar: "ٱلْنَّافِعُ", en: "An-Nafi", ur: "نفع پہنچانے والا" },
+    { ar: "ٱلْنُّورُ", en: "An-Nur", ur: "نور" }, { ar: "ٱلْهَادِي", en: "Al-Hadi", ur: "ہدایت دینے والا" },
+    { ar: "ٱلْبَدِيعُ", en: "Al-Badi", ur: "انوکھا پیدا کرنے والا" }, { ar: "ٱلْبَاقِي", en: "Al-Baqi", ur: "ہمیشہ رہنے والا" },
+    { ar: "ٱلْوَارِثُ", en: "Al-Warith", ur: "وارث" }, { ar: "ٱلْرَّشِيدُ", en: "Ar-Rashid", ur: "سیدھی راہ دکھانے والا" },
+    { ar: "ٱلْصَّبُورُ", en: "As-Sabur", ur: "صبر کرنے والا" }
 ];
 
 let index = 0;
@@ -393,7 +458,7 @@ const taskIndex = Math.floor(Math.random() * ramadanTasks.length);
 document.getElementById('daily-task-text').innerText = ramadanTasks[taskIndex];
 function markTaskDone() { 
     const b = document.getElementById('task-btn');
-    b.innerText = "Completed! ✅"; b.style.background = "#44ff44"; b.disabled = true;
+    b.innerText = "Completed ✅ !ما شاء الله"; b.style.background = "#44ff44"; b.disabled = true;
 }
 
 const checks = document.querySelectorAll('.salah-check');
@@ -405,6 +470,7 @@ checks.forEach((check, i) => {
 </script>
 </body>
 </html>
+
 
 
 
