@@ -224,7 +224,16 @@
     <div class="progress-bar" id="bar"></div>
     <div id="content"></div>
 </div>
-
+<div style="text-align: center; margin-top: 30px; padding-bottom: 20px;">
+    <button onclick="shareApp()" style="background: #25D366; color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; margin-bottom: 20px;">
+        Share on WhatsApp 📱
+    </button>
+    
+    <p style="font-size: 12px; opacity: 0.6; letter-spacing: 1px;">
+        DESIGNED FOR RAMADAN 2026 <br>
+        <span style="color: var(--gold);">Made with ❣ by [RUBA RAJPOOT]</span>
+    </p>
+</div>
 
 <audio id="bgMusic" loop>
    <source src="ramadan.mp3" type="audio/mpeg">
@@ -368,6 +377,11 @@ setInterval(updateCountdown, 3600000);
 
 // Sitaron ko screen par bulane ke liye
 createStars();
+    function shareApp() {
+    const text = "Check out this beautiful Ramadan Journey App! It has a Salah Tracker, Zakat Calculator, and Daily Duas. ✨ \n\n Link: " + window.location.href;
+    const url = "https://wa.me/?text=" + encodeURIComponent(text);
+    window.open(url, '_blank');
+}
 
 const music = document.getElementById('bgMusic');
 const audioBtn = document.getElementById('audioBtn');
@@ -408,6 +422,7 @@ checks.forEach((check, i) => {
 </script>
 </body>
 </html>
+
 
 
 
