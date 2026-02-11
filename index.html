@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ramadan Journey | Ultra Pro</title>
+    <title>Ramadan Journey </title>
 
     <style>
         :root {
@@ -187,16 +187,34 @@
 // --- DATA ---
 const pages = [
   { title: "Welcome Ramadan 🌙", body: "Ramadan sirf bhook ka nahi, dil ki safai ka mahina hai. Yeh safar Allah ke qareeb anay ka hai 🤍" },
-  { title: "Gunahon ki Maafi ✨", body: "Nabi ﷺ ne farmaya: Jis ne Ramadan ke roze imaan aur sawab ki niyyat se rakhe, us ke pichle tamam gunah maaf kar diye jayenge. (Sahih Bukhari: 38) 🌙🤍" },
-  { title: "Ar-Rayyan 🚪", body: "Hadees: Rasool Allah ﷺ ne farmaya: Jannat ka ek darwaza hai jise 'Ar-Rayyan' kaha jata hai. Qayamat ke din us se sirf rozedar hi dakhil honge... 🌿" },
-  { title: "Allah’s Message 📖", arabic: "لَعَلَّكُمْ تَتَّقُونَ", urdu: "تاکہ تم تقویٰ اختیار کرو", body: "Ramadan ka goal sirf khany py control nahi, balkay taqwa hai." },
-  { title: "Done! 🌟", body: "May Allah accept our worship. Ameen. Share this with friends!" }
+  { title: "Gunahon ki Maafi ✨🙏💖", body: "Nabi ﷺ ne farmaya: Jis ne Ramadan ke roze imaan aur sawab ki niyyat se rakhe, us ke pichle tamam gunah maaf kar diye jayenge. (Sahih Bukhari: 38) 🌙🤍" },
+  { title: "Ar-Rayyan 🚪", body: "Hadees: Rasool Allah ﷺ ne farmaya: Jannat ka ek darwaza hai jise 'Ar-Rayyan' kaha jata hai. Qayamat ke din us se sirf rozedar hi dakhil honge... jab wo dakhil ho jayenge to wo darwaza band kar diya jayega. 🌿" },
+  { title: "Our Mission 🌱", body: "Is Ramadan hum apni aadatain nahi, apni soch aur rawaiya badlain ge." },
+  { title: "Allah’s Message 📖", arabic: "لَعَلَّكُمْ تَتَّقُونَ", urdu: "تاکہ تم تقویٰ اختیار کرو", body: "Ramadan ka goal sirf khany py control nahi, balkay taqwa hai — har waqt ALLAH ki yad ma masrof rehna ha" },
+  { title: "Things To Do ✅", body: "Narmi, sabr, Qur’an, aur choti choti nekian — yehi Ramadan ki khoobsurti hai." },
+  { title: "The Prophet ﷺ Said", arabic: "فَلَيْسَ لِلَّهِ حَاجَةٌ", urdu: "اللہ کو اس کے بھوکا رہنے کی حاجت نہیں", body: "Roza sirf pait ka nahi, zaban aur rawaiya ka bhi hota hai." },
+  { title: "The Change 🌿", body: "Ramadan humein yaad dilata hai ke hum Allah ke baghair adhooray hain." },
+  { title: "Allah ka Khas Inaam 🎁", body: "Ek Hadees-e-Qudsi mein Allah Ta'ala farmata hai: 'Roza mere liye hai aur Main hi is ka badla doonga. (Sahih Bukhari: 1894). Yaani Allah ne iska sawab farishton par bhi zahir nahi kiya, wo khud apni shaan ke mutabiq ata farmayega." },
+  { title: "A Small Dua 🤲", body: "Ya Allah, is Ramadan ko hamari zindagi ka turning point bana de. Ameen 🤍" },
+  { title: "😊", body: "Thanks for reading 🌟 Share with your friends!, may ALLAh fulfill your good wishes and May ALLAH forgive us all and accept our worship ✨Ameen, remember me in your prayers 🤍" }
 ];
 
-const dailyDuas = [
-    { ar: "اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي", ur: "Ae Allah! Tu maaf karne wala hai..." },
-    { ar: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً", ur: "Ae hamare Rabb! Humein duniya mein bhalai de..." },
-    { ar: "يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي", ur: "Ae dilon ko pherne wale! Mere dil ko sabit qadam rakh." }
+  const dailyDuas = [
+    { ar: "اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي", ur: "Ae Allah! Tu maaf karne wala hai aur maaf karne ko pasand karta hai, pas mujhe maaf farma de." },
+    { ar: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً", ur: "Ae hamare Rabb! Humein duniya mein bhi bhalai de aur aakhirat mein bhi bhalai de." },
+    { ar: "يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ", ur: "Ae dilon ko pherne wale! Mere dil ko apne deen par sabit qadam rakh." },
+    { ar: "اللَّهُمَّ أَجِرْنِي مِنَ النَّارِ", ur: "Ae Allah! Mujhe aag (jahannam) ke azab se mehfooz rakh." },
+    { ar: "رَبِّ اغْفِرْ وَارْحَمْ وَأَنْتَ خَيْرُ الرَّاحِمِينَ", ur: "Ae mere Rabb! Baksh de aur raham farma, Tu sabse behtar raham karne wala hai." },
+    { ar: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ", ur: "Ae Allah! Main Tujh se Jannat ka sawal karta hoon." },
+    { ar: "اللَّهُمَّ بَارِكْ لَنَا فِي رَمَضَانَ", ur: "Ae Allah! Hamare liye Ramadan mein barkat ata farma." },
+    { ar: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ", ur: "Allah pak hai apni tareef ke saath." },
+    { ar: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ", ur: "Gunahon se bachne ki taqat aur neki karne ki quwwat sirf Allah ki taraf se hai." },
+    { ar: "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ", ur: "Main Allah se maafi mangta hoon aur uski taraf ruju karta hoon." },
+    { ar: "اللَّهُمَّ اكْفِنِي بِحَلَالِكَ عَنْ حَرَامِكَ", ur: "Ae Allah! Mujhe apne halal ke zariye haram se bacha kar kafi ho ja." },
+    { ar: "رَبِّ زِدْنِي عِلْمًا", ur: "Ae mere Rabb! Mere ilm mein izafa farma." },
+    { ar: "اللَّهُمَّ عافِني في بَدَني", ur: "Ae Allah! Mere badan mein mujhe afiyat ata farma." },
+    { ar: "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ", ur: "Humein Allah kafi hai aur Wo behtareen kar-saaz hai." },
+    { ar: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحُزْنِ", ur: "Ae Allah! Main fikar aur gham se Teri panah mangta hoon." }
 ];
 
 let index = 0;
@@ -220,7 +238,7 @@ function render() {
       <div style="display:flex; gap:10px; margin-top:20px;">
           ${!isFirst ? `<button class="btn-secondary" style="flex:1" onclick="changePage(-1)">Back</button>` : ""}
           <button class="btn-primary" style="flex:2" onclick="${isLast ? 'exitSlides()' : 'changePage(1)'}">
-            ${isLast ? 'Finish 🏁' : 'Continue ➜'}
+            ${isLast ? 'Restart ↺' : 'Continue ➜'}
           </button>
       </div>
     </div>
@@ -283,3 +301,4 @@ checks.forEach((check, i) => {
 </script>
 </body>
 </html>
+
