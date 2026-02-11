@@ -13,17 +13,27 @@
             --bg-dark: #0f172a;
         }
 
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: var(--bg-dark);
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-            /* The gradient will be updated by JS */
-        }
+       body {
+    margin: 0;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.parallax-bg {
+    position: fixed;
+    top: -5%; left: -5%;
+    width: 110%; height: 110%;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                url('https://images.unsplash.com/photo-1519817650390-64a93db51149?q=80&w=2000');
+    background-size: cover;
+    background-position: center;
+    z-index: -1; /* Ye material ke piche chala jayega */
+    transition: transform 0.1s ease-out;
+}
 
         /* Main Wrapper to handle scrolling */
         .app-container {
@@ -123,6 +133,7 @@
     </style>
 </head>
 <body>
+    <div class="parallax-bg"></div>
 
 <div class="bg-glow"></div>
 
@@ -297,8 +308,17 @@ checks.forEach((check, i) => {
     if (saved) check.checked = saved === 'true';
     check.onchange = () => localStorage.setItem('salah-' + i, check.checked);
 });
+    document.addEventListener('mousemove', (e) => {
+    const bg = document.querySelector('.parallax-bg');
+    if(bg) {
+        const x = (window.innerWidth - e.pageX * 2) / 90;
+        const y = (window.innerHeight - e.pageY * 2) / 90;
+        bg.style.transform = `translateX(${x}px) translateY(${y}px)`;
+    }
+});
 
 </script>
 </body>
 </html>
+
 
