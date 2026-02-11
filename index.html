@@ -199,7 +199,15 @@
             <p id="dua-urdu" class="urdu"></p>
             <button class="btn-next-dua" onclick="showRandomDua()">Next Dua ↻</button>
         </div>
-
+<div class="card" style="margin-top: 20px; border-left: 4px solid var(--gold); background: rgba(255, 215, 0, 0.05);">
+    <h4 style="color: var(--gold); margin: 0; font-size: 14px; text-transform: uppercase;">✨ Today's Special Task</h4>
+    <p id="daily-task-text" style="font-size: 18px; font-weight: bold; margin: 10px 0; min-height: 50px;">
+        Loading your task...
+    </p>
+    <button onclick="markTaskDone()" id="task-btn" style="background: var(--gold); color: black; border: none; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer;">
+        Mark as Completed
+    </button>
+</div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
             <div class="card" style="padding: 15px;">
                 <p style="font-size: 12px; margin:0">Tasbeeh</p>
@@ -378,7 +386,37 @@ setInterval(updateCountdown, 3600000);
 // Sitaron ko screen par bulane ke liye
 createStars();
  
+const ramadanTasks = [
+    "Recite 1 page of Quran with Translation 📖",
+    "Feed a needy person or give some Sadaqah 🍯",
+    "Call a relative you haven't spoken to lately 📞",
+    "Offer 2 Rakat Tahajjud or Nafil prayers 🌙",
+    "Learn 1 new Name of Allah with meaning ✨",
+    "Avoid unnecessary social media scrolling today 📱",
+    "Prepare a small Iftar item for a neighbor 🍲",
+    "Make special Dua for the Ummah before Iftar 🤲",
+    "Listen to an Islamic lecture for 10 minutes 🎧",
+    "Practice patience and avoid getting angry today 😊"
+];
 
+function updateDailyTask() {
+    const today = new Date();
+    const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+    
+    // Date ke hisab se task select karega
+    const taskIndex = dayOfYear % ramadanTasks.length;
+    document.getElementById('daily-task-text').innerText = ramadanTasks[taskIndex];
+}
+
+function markTaskDone() {
+    const btn = document.getElementById('task-btn');
+    btn.innerText = "Completed! MashAllah ✅";
+    btn.style.background = "#44ff44";
+    btn.disabled = true;
+}
+
+// Initial Call
+updateDailyTask();
 const music = document.getElementById('bgMusic');
 const audioBtn = document.getElementById('audioBtn');
 
@@ -423,6 +461,7 @@ checks.forEach((check, i) => {
 </script>
 </body>
 </html>
+
 
 
 
