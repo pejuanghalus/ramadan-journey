@@ -150,7 +150,39 @@
     z-index: 100;
     transition: 0.3s;
 }
+/* Names Gallery Styling */
+#names-gallery {
+    transition: transform 0.4s ease-in-out;
+}
 
+#names-grid {
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); /* Mobile par 3 columns honge */
+    gap: 10px; 
+    padding: 10px;
+}
+
+.name-box {
+    background: rgba(255, 215, 0, 0.05);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: 10px 5px;
+    text-align: center;
+    backdrop-filter: blur(5px);
+}
+
+.name-box h3 { 
+    margin: 0; 
+    font-size: 18px; 
+    color: white; 
+}
+
+.name-box p { 
+    margin: 3px 0 0; 
+    font-size: 9px; 
+    color: var(--gold); 
+    text-transform: uppercase; 
+}
 .audio-toggle:hover {
     background: var(--gold);
     color: #000;
@@ -208,6 +240,23 @@
         Mark as Completed
     </button>
 </div>
+        <div class="card" style="margin-top: 20px;">
+    <h3 style="color: var(--gold);">99 Names of Allah ✨</h3>
+    <p style="font-size: 12px; opacity: 0.8;">Recite and listen to the beautiful names.</p>
+    <button onclick="openNamesGallery()" class="btn-primary" style="padding: 10px; margin-top: 10px;">Explore Gallery 📖</button>
+</div>
+
+<audio id="namesAudio">
+    <source src="99names.mp3" type="audio/mpeg">
+</audio>
+
+<div id="names-gallery" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; overflow-y: auto; padding: 20px;">
+    <button onclick="closeNamesGallery()" style="position: sticky; top: 10px; float: right; background: var(--gold); border: none; padding: 10px; border-radius: 5px; font-weight: bold; cursor: pointer;">✕ Close</button>
+    <h2 style="color: var(--gold); text-align: center; margin-top: 40px;">Asma-ul-Husna</h2>
+    
+    <div id="names-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 15px; margin-top: 30px;">
+        </div>
+</div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
             <div class="card" style="padding: 15px;">
                 <p style="font-size: 12px; margin:0">Tasbeeh</p>
@@ -234,12 +283,12 @@
 </div>
 <div style="text-align: center; margin-top: 30px; padding-bottom: 20px;">
     <button onclick="shareApp()" style="background: #25D366; color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; margin-bottom: 20px;">
-        Share on WhatsApp 📱
+        Share on WhatsApp 📱💌
     </button>
     
     <p style="font-size: 12px; opacity: 0.6; letter-spacing: 1px;">
         DESIGNED FOR RAMADAN 2026 <br>
-        <span style="color: var(--gold);">Made with ❣ by [RUBA RAJPOOT]</span>
+        <span style="color: var(--gold);">Made with 💗 by RUBA RAJPOOT</span>
     </p>
 </div>
 
@@ -417,6 +466,86 @@ function markTaskDone() {
 
 // Initial Call
 updateDailyTask();
+    const fullNamesList = [
+    { ar: "ٱلْرَّحْمَنُ", en: "Ar-Rahman", ur: "بڑا مہربان" }, { ar: "ٱلْرَّحِيْمُ", en: "Ar-Raheem", ur: "نہایت رحم والا" },
+    { ar: "ٱلْمَلِكُ", en: "Al-Malik", ur: "حقیقی بادشاہ" }, { ar: "ٱلْقُدُّوسُ", en: "Al-Quddus", ur: "نہایت پاک" },
+    { ar: "ٱلْسَّلَامُ", en: "As-Salam", ur: "سلامتی والا" }, { ar: "ٱلْمُؤْمِنُ", en: "Al-Mu'min", ur: "امن دینے والا" },
+    { ar: "ٱلْمُهَيْمِنُ", en: "Al-Muhaymin", ur: "نگہبان" }, { ar: "ٱلْعَزِيزُ", en: "Al-Aziz", ur: "غالب اور عزت والا" },
+    { ar: "ٱلْجَبَّارُ", en: "Al-Jabbar", ur: "زبردست" }, { ar: "ٱلْمُتَكَبِّرُ", en: "Al-Mutakabbir", ur: "بڑائی والا" },
+    { ar: "ٱلْخَالِقُ", en: "Al-Khaliq", ur: "پیدا کرنے والا" }, { ar: "ٱلْبَارِئُ", en: "Al-Bari'", ur: "ٹھیک بنانے والا" },
+    { ar: "ٱلْمُصَوِّرُ", en: "Al-Musawwir", ur: "صورت گری کرنے والا" }, { ar: "ٱلْغَفَّارُ", en: "Al-Ghaffar", ur: "بہت بخشنے والا" },
+    { ar: "ٱلْقَهَّارُ", en: "Al-Qahhar", ur: "سب پر غالب" }, { ar: "ٱلْوَهَّابُ", en: "Al-Wahhab", ur: "بہت دینے والا" },
+    { ar: "ٱلْرَّزَّاقُ", en: "Ar-Razzaq", ur: "رزق دینے والا" }, { ar: "ٱلْفَتَّاحُ", en: "Al-Fattah" , ur: "مشکل کشا" },
+    { ar: "ٱلْعَلِيمُ", en: "Al-Alim", ur: "سب کچھ جاننے والا" }, { ar: "ٱلْقَابِضُ", en: "Al-Qabid", ur: "تنگی کرنے والا" },
+    { ar: "ٱلْبَاسِطُ", en: "Al-Basit", ur: "فراخی کرنے والا" }, { ar: "ٱلْخَافِضُ", en: "Al-Khafid", ur: "پست کرنے والا" },
+    { ar: "ٱلْرَّافِعُ", en: "Ar-Rafi", ur: "بلند کرنے والا" }, { ar: "ٱلْمُعِزُّ", en: "Al-Mu'izz", ur: "عزت دینے والا" },
+    { ar: "ٱلْمُذِلُّ", en: "Al-Mudhill", ur: "ذلت دینے والا" }, { ar: "ٱلْسَّمِيعُ", en: "As-Sami", ur: "سب کچھ سننے والا" },
+    { ar: "ٱلْبَصِيرُ", en: "Al-Basir", ur: "سب کچھ دیکھنے والا" }, { ar: "ٱلْحَكَمُ", en: "Al-Hakam", ur: "فیصلہ کرنے والا" },
+    { ar: "ٱلْعَدْلُ", en: "Al-Adl", ur: "سراپا عدل" }, { ar: "ٱلْلَّطِيفُ", en: "Al-Latif", ur: "مہربان" },
+    { ar: "ٱلْخَبِيرُ", en: "Al-Khabir", ur: "باخبر" }, { ar: "ٱلْحَلِيمُ", en: "Al-Halim", ur: "بردبار" },
+    { ar: "ٱلْعَظِيمُ", en: "Al-Azim", ur: "عظمت والا" }, { ar: "ٱلْغَفُورُ", en: "Al-Ghafur", ur: "درگزر کرنے والا" },
+    { ar: "ٱلْشَّكُورُ", en: "Ash-Shakur", ur: "قدر دان" }, { ar: "ٱلْعَلِيُّ", en: "Al-Ali", ur: "بہت بلند" },
+    { ar: "ٱلْكَبِيرُ", en: "Al-Kabir", ur: "بہت بڑا" }, { ar: "ٱلْحَفِيظُ", en: "Al-Hafiz", ur: "حفاظت کرنے والا" },
+    { ar: "ٱلْمُقِيتُ", en: "Al-Muqit", ur: "توانائی دینے والا" }, { ar: "ٱلْحَسِيبُ", en: "Al-Hasib", ur: "کفایت کرنے والا" },
+    { ar: "ٱلْجَلِيلُ", en: "Al-Jalil", ur: "بزرگی والا" }, { ar: "ٱلْكَرِيمُ", en: "Al-Karim", ur: "کرم کرنے والا" },
+    { ar: "ٱلْرَّقِيبُ", en: "Ar-Raqib", ur: "نگہبان" }, { ar: "ٱلْمُجِيبُ", en: "Al-Mujib", ur: "قبول کرنے والا" },
+    { ar: "ٱلْوَاسِعُ", en: "Al-Wasi", ur: "وسعت والا" }, { ar: "ٱلْحَكِيمُ", en: "Al-Hakim", ur: "حکمت والا" },
+    { ar: "ٱلْوَدُودُ", en: "Al-Wadud", ur: "محبت کرنے والا" }, { ar: "ٱلْمَجِيدُ", en: "Al-Majid", ur: "بزرگی والا" },
+    { ar: "ٱلْبَاعِثُ", en: "Al-Ba'ith", ur: "دوبارہ زندہ کرنے والا" }, { ar: "ٱلْشَّهِيدُ", en: "Ash-Shahid", ur: "گواہ" },
+    { ar: "ٱلْحَقُّ", en: "Al-Haqq", ur: "برحق" }, { ar: "ٱلْوَكِيلُ", en: "Al-Wakil", ur: "کارساز" },
+    { ar: "ٱلْقَوِيُّ", en: "Al-Qawwi", ur: "طاقتور" }, { ar: "ٱلْمَتِينُ", en: "Al-Matin", ur: "مضبوط" },
+    { ar: "ٱلْوَلِيُّ", en: "Al-Wali", ur: "دوست" }, { ar: "ٱلْحَمِيدُ", en: "Al-Hamid", ur: "قابلِ تعریف" },
+    { ar: "ٱلْمُحْصِيُ", en: "Al-Muhsi", ur: "گننے والا" }, { ar: "ٱلْمُبْدِئُ", en: "Al-Mubdi", ur: "پہلی بار پیدا کرنے والا" },
+    { ar: "ٱلْمُعِيدُ", en: "Al-Mu'id", ur: "دوبارہ پیدا کرنے والا" }, { ar: "ٱلْمُحْيِي", en: "Al-Muhyi", ur: "زندہ کرنے والا" },
+    { ar: "ٱلْمُمِيتُ", en: "Al-Mumit", ur: "موت دینے والا" }, { ar: "ٱلْحَيُّ", en: "Al-Hayy", ur: "ہمیشہ زندہ رہنے والا" },
+    { ar: "ٱلْقَيُّومُ", en: "Al-Qayyum", ur: "سب کو سنبھالنے والا" }, { ar: "ٱلْوَاجِدُ", en: "Al-Wajid", ur: "پانے والا" },
+    { ar: "ٱلْمَاجِدُ", en: "Al-Majid", ur: "بزرگی والا" }, { ar: "ٱلْوَاحِدُ", en: "Al-Wahid", ur: "ایک" },
+    { ar: "ٱلْأَحَدُ", en: "Al-Ahad", ur: "یکتا" }, { ar: "ٱلْصَّمَدُ", en: "As-Samad", ur: "بے نیاز" },
+    { ar: "ٱلْقَادِرُ", en: "Al-Qadir", ur: "قدرت رکھنے والا" }, { ar: "ٱلْمُقْتَدِرُ", en: "Al-Muqtadir", ur: "مقتدر" },
+    { ar: "ٱلْمُقَدِّمُ", en: "Al-Muqaddim", ur: "آگے کرنے والا" }, { ar: "ٱلْمُؤَخِّرُ", en: "Al-Mu'akhkhir", ur: "پیچھے کرنے والا" },
+    { ar: "ٱلأَوَّلُ", en: "Al-Awwal", ur: "سب سے پہلا" }, { ar: "ٱلْآخِرُ", en: "Al-Akhir", ur: "سب سے آخری" },
+    { ar: "ٱلْظَّاهِرُ", en: "Az-Zahir", ur: "ظاہر" }, { ar: "ٱلْبَاطِنُ", en: "Al-Batin", ur: "پوشیدہ" },
+    { ar: "ٱلْوَالِي", en: "Al-Wali", ur: "مالک" }, { ar: "ٱلْمُتَعَالِي", en: "Al-Muta'ali", ur: "سب سے بلند" },
+    { ar: "ٱلْبَرُّ", en: "Al-Barr", ur: "نیکی کا سرچشمہ" }, { ar: "ٱلْتَّوَّابُ", en: "At-Tawwab", ur: "توبہ قبول کرنے والا" },
+    { ar: "ٱلْمُنْتَقِمُ", en: "Al-Muntaqim", ur: "بدلہ لینے والا" }, { ar: "ٱلْعَفُوُّ", en: "Al-Afu", ur: "معاف کرنے والا" },
+    { ar: "ٱلْرَّؤُوفُ", en: "Ar-Ra'uf", ur: "شفقت کرنے والا" }, { ar: "مَالِكُ ٱلْمُلْكِ", en: "Malik-ul-Mulk", ur: "کائنات کا مالک" },
+    { ar: "ذُو ٱلْجَلَالِ وَٱلْإِكْرَامِ", en: "Dhul-Jalali wal-Ikram", ur: "جلال اور انعام والا" }, { ar: "ٱلْمُقْسِطُ", en: "Al-Muqsit", ur: "انصاف کرنے والا" },
+    { ar: "ٱلْجَامِعُ", en: "Al-Jami", ur: "جمع کرنے والا" }, { ar: "ٱلْغَنِيُّ", en: "Al-Ghani", ur: "بے نیاز" },
+    { ar: "ٱلْمُغْنِيُّ", en: "Al-Mughni", ur: "مالدار کرنے والا" }, { ar: "ٱلْمَانِعُ", en: "Al-Mani", ur: "روکنے والا" },
+    { ar: "ٱلْضَّارُّ", en: "Ad-Darr", ur: "نقصان پہنچانے والا" }, { ar: "ٱلْنَّافِعُ", en: "An-Nafi", ur: "نفع پہنچانے والا" },
+    { ar: "ٱلْنُّورُ", en: "An-Nur", ur: "نور" }, { ar: "ٱلْهَادِي", en: "Al-Hadi", ur: "ہدایت دینے والا" },
+    { ar: "ٱلْبَدِيعُ", en: "Al-Badi", ur: "انوکھا پیدا کرنے والا" }, { ar: "ٱلْبَاقِي", en: "Al-Baqi", ur: "ہمیشہ رہنے والا" },
+    { ar: "ٱلْوَارِثُ", en: "Al-Warith", ur: "وارث" }, { ar: "ٱلْرَّشِيدُ", en: "Ar-Rashid", ur: "سیدھی راہ دکھانے والا" },
+    { ar: "ٱلْصَّبُورُ", en: "As-Sabur", ur: "صبر کرنے والا" }
+]
+    // Note: Yahan aap baqi 89 names bhi isi format mein add kar sakti hain.
+];
+
+function openNamesGallery() {
+    const grid = document.getElementById('names-grid');
+    grid.innerHTML = ''; // Pehle clear karein
+    
+    fullNamesList.forEach(item => {
+        grid.innerHTML += `
+            <div class="name-box">
+                <h3>${item.ar}</h3>
+                <p>${item.en}</p>
+            </div>
+        `;
+    });
+
+    document.getElementById('names-gallery').classList.remove('hidden');
+    
+    // Stop background music and play 99 Names audio
+    document.getElementById('bgMusic').pause();
+    document.getElementById('namesAudio').play();
+}
+
+function closeNamesGallery() {
+    document.getElementById('names-gallery').classList.add('hidden');
+    document.getElementById('namesAudio').pause();
+    document.getElementById('namesAudio').currentTime = 0; // Reset audio
+}
 const music = document.getElementById('bgMusic');
 const audioBtn = document.getElementById('audioBtn');
 
@@ -461,6 +590,7 @@ checks.forEach((check, i) => {
 </script>
 </body>
 </html>
+
 
 
 
