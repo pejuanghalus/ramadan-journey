@@ -377,11 +377,7 @@ setInterval(updateCountdown, 3600000);
 
 // Sitaron ko screen par bulane ke liye
 createStars();
-    function shareApp() {
-    const text = "Check out this beautiful Ramadan Journey App! It has a Salah Tracker, Zakat Calculator, and Daily Duas. ✨ \n\n Link: " + window.location.href;
-    const url = "https://wa.me/?text=" + encodeURIComponent(text);
-    window.open(url, '_blank');
-}
+ 
 
 const music = document.getElementById('bgMusic');
 const audioBtn = document.getElementById('audioBtn');
@@ -418,10 +414,16 @@ checks.forEach((check, i) => {
         bg.style.transform = `translateX(${x}px) translateY(${y}px)`;
     }
 });
+       function shareApp() {
+    const text = "Check out this beautiful Ramadan Journey App! It has a Salah Tracker, Zakat Calculator, and Daily Duas. ✨ \n\n Link: " + window.location.href;
+    const url = "https://wa.me/?text=" + encodeURIComponent(text);
+    window.open(url, '_blank');
+}
 
 </script>
 </body>
 </html>
+
 
 
 
