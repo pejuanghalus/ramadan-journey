@@ -121,7 +121,28 @@
             width: 70px; height: 70px; border-radius: 50%;
             background: var(--gold); font-size: 24px; margin-top: 10px;
         }
+.audio-toggle {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 100;
+    transition: 0.3s;
+}
 
+.audio-toggle:hover {
+    background: var(--gold);
+    color: #000;
+}
         /* Inputs */
         input[type="number"] {
             width: 100%; padding: 12px; border-radius: 10px;
@@ -183,12 +204,13 @@
         </div>
     </div>
 
-    <div id="main-slides" class="card hidden">
-        <div class="progress-bar" id="bar"></div>
-        <div id="content"></div>
-    </div>
-
+  <div id="main-slides" class="card hidden">
+    <button class="audio-toggle" onclick="toggleAudio()" id="audioBtn">🔇</button>
+    
+    <div class="progress-bar" id="bar"></div>
+    <div id="content"></div>
 </div>
+
 
 <audio id="bgMusic" loop>
    <source src="ramadan.mp3" type="audio/mpeg">
@@ -301,7 +323,27 @@ updateCountdown();
 showRandomDua();
 setInterval(updateCountdown, 3600000);
 
-// Load Checkboxes
+const music = document.getElementById('bgMusic');
+const audioBtn = document.getElementById('audioBtn');
+
+function toggleAudio() {
+    if (music.paused) {
+        music.play();
+        audioBtn.innerText = "🔊";
+    } else {
+        music.pause();
+        audioBtn.innerText = "🔇";
+    }
+}
+
+// Ensure karein ke 'Start' dabane par music shuru ho
+function startAppFromHome() {
+    document.getElementById('home-dashboard').style.display = 'none';
+    document.getElementById('main-slides').classList.remove('hidden');
+    music.play();
+    if(audioBtn) audioBtn.innerText = "🔊";
+    render();
+}// Load Checkboxes
 const checks = document.querySelectorAll('.salah-check');
 checks.forEach((check, i) => {
     const saved = localStorage.getItem('salah-' + i);
@@ -320,5 +362,6 @@ checks.forEach((check, i) => {
 </script>
 </body>
 </html>
+
 
 
