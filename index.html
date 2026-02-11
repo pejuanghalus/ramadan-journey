@@ -121,6 +121,18 @@
             width: 70px; height: 70px; border-radius: 50%;
             background: var(--gold); font-size: 24px; margin-top: 10px;
         }
+        .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: twinkle var(--duration) infinite ease-in-out;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
 .audio-toggle {
     position: absolute;
     top: 15px;
@@ -151,12 +163,14 @@
         }
 
         .hidden { display: none !important; }
+        
     </style>
 </head>
 <body>
     <div class="parallax-bg"></div>
 
 <div class="bg-glow"></div>
+    <div id="stars" style="position: fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none;"></div>
 
 <div class="app-container">
     
@@ -322,6 +336,38 @@ function resetCount() { count = 0; document.getElementById('t-count').innerText 
 updateCountdown();
 showRandomDua();
 setInterval(updateCountdown, 3600000);
+    function createStars() {
+    const container = document.getElementById('stars');
+    if(!container) return; // Agar container na mile toh error na aaye
+
+    const starCount = 80; // Aap 50 se 100 ke darmiyan rakh sakti hain
+
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random position (0% se 100%)
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        // Random size (1px se 3px)
+        const size = Math.random() * 3 + 1;
+        
+        // Random chamakne ki raftaar (2s se 5s)
+        const duration = (Math.random() * 3 + 2) + 's';
+
+        star.style.left = x + '%';
+        star.style.top = y + '%';
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        star.style.setProperty('--duration', duration);
+
+        container.appendChild(star);
+    }
+}
+
+// Sitaron ko screen par bulane ke liye
+createStars();
 
 const music = document.getElementById('bgMusic');
 const audioBtn = document.getElementById('audioBtn');
@@ -362,6 +408,7 @@ checks.forEach((check, i) => {
 </script>
 </body>
 </html>
+
 
 
 
