@@ -106,7 +106,33 @@
             width: 70px; height: 70px; border-radius: 50%;
             background: var(--gold); font-size: 24px; margin-top: 10px;
         }
+/* Default (Night Mode as you already have) */
+:root {
+    --bg-color: #0b0f1a;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --text-color: #ffffff;
+    --gold: #ffd700;
+}
 
+/* Day Mode Colors */
+body.day-mode {
+    --bg-color: #f4f7f6;
+    --card-bg: #ffffff;
+    --text-color: #2d3436;
+    --gold: #b8860b; /* Thoda dark gold taake white par nazar aaye */
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: 0.3s; /* Smooth switching ke liye */
+}
+
+.card {
+    background: var(--card-bg);
+    color: var(--text-color);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
         .star {
             position: absolute; background: white; border-radius: 50%;
             opacity: 0.5; animation: twinkle var(--duration) infinite ease-in-out;
@@ -164,7 +190,11 @@
                 <h1>Ramadan Mubarak 🌙</h1>
                 <p id="countdown"></p>
             </div>
-
+<div style="text-align: right; padding: 10px;">
+    <button id="theme-toggle" onclick="toggleTheme()" style="background: var(--gold); border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; color: black;">
+        ☀️ Day Mode
+    </button>
+</div>
             <div class="card">
                 <p style="margin-top:0">Daily Progress</p>
                 <div class="check-grid">
@@ -653,7 +683,29 @@ function exitSlides() {
     document.getElementById('home-dashboard').classList.remove('hidden');
     document.getElementById('main-slides').classList.add('hidden');
 }
+function toggleTheme() {
+    const body = document.body;
+    const btn = document.getElementById('theme-toggle');
+    
+    body.classList.toggle('day-mode');
+    
+    if (body.classList.contains('day-mode')) {
+        btn.innerHTML = "🌙 Night Mode";
+        localStorage.setItem('theme', 'day');
+    } else {
+        btn.innerHTML = "☀️ Day Mode";
+        localStorage.setItem('theme', 'night');
+    }
+}
 
+// Page load hote hi purana pasandida theme check karein
+window.onload = () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'day') {
+        document.body.classList.add('day-mode');
+        document.getElementById('theme-toggle').innerHTML = "🌙 Night Mode";
+    }
+};
 function updateCountdown() {
     const ramadanDate = new Date("February 18, 2026 00:00:00").getTime();
     const now = new Date().getTime();
@@ -1257,6 +1309,7 @@ function showSparkleFeedback() {
 </script>
 </body>
 </html>
+
 
 
 
