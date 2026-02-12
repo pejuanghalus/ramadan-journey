@@ -1210,15 +1210,16 @@ if (s && s.content) {
 
 // Final output container mein daal dein
 // Naya polished code taake words na katen
+// Arabic margin aur size fix version
 container.innerHTML = s.content.map(ayat => `
-    <div style="margin-bottom: 35px; padding: 0 20px; box-sizing: border-box; width: 100%;">
-        <p style="font-size: 32px; line-height: 2.2; direction: rtl; text-align: right; color: white; margin: 0; word-wrap: break-word;">
+    <div style="margin-bottom: 40px; padding: 0 25px; box-sizing: border-box; width: 100%; text-align: center;">
+        <p style="font-size: 26px; line-height: 1.8; direction: rtl; color: white; margin: 0 auto; display: inline-block; width: 100%; word-wrap: break-word;">
             ${ayat.ar}
         </p>
-        <p style="color: gold; font-size: 18px; line-height: 1.6; margin-top: 15px; text-align: center; direction: ltr;">
+        <p style="color: gold; font-size: 16px; line-height: 1.6; margin-top: 12px; font-family: inherit;">
             ${ayat.ur}
         </p>
-        <div style="width: 40px; height: 1px; background: rgba(255,215,0,0.2); margin: 20px auto 0;"></div>
+        <div style="width: 30px; height: 1px; background: rgba(255,215,0,0.15); margin: 25px auto 0;"></div>
     </div>
 `).join('');
     document.getElementById('surah-reader').style.display = 'block';
@@ -1256,6 +1257,7 @@ function showSparkleFeedback() {
 </script>
 </body>
 </html>
+
 
 
 
