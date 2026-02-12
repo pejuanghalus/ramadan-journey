@@ -125,24 +125,8 @@
             display: flex; justify-content: center; align-items: center;
             cursor: pointer; z-index: 100;
         }
-<div class="card" style="margin-top: 20px;"> <h3 style="color: gold;">5 Blessed Surahs 📖</h3>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"> 
-        <button class="btn-secondary" onclick="openSurah('yaseen')">Surah Yaseen</button>
-        <button class="btn-secondary" onclick="openSurah('mulk')">Surah Al-Mulk</button> 
-        <button class="btn-secondary" onclick="openSurah('rahman')">Surah Ar-Rahman</button> 
-        <button class="btn-secondary" onclick="openSurah('kahf')">Surah Al-Kahf</button>
-        <button class="btn-secondary" style="grid-column: span 2;" onclick="openSurah('waqiah')">Surah Al-Waqiah</button>
-    </div> </div>
 
-<div id="surah-reader" 
-        style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0b0f1a; z-index: 9999; overflow-y: auto; padding: 20px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid gold; padding-bottom: 10px; margin-bottom: 20px;">
-        <h2 id="reader-title" style="color: gold; margin: 0;"></h2> 
-        <button onclick="closeSurah()" 
-        style="background: gold; color: black; border: none; padding: 10px; border-radius: 5px; font-weight: bold; cursor: pointer;">✕ Close
-    </button>
-    </div>
-        <div id="surah-content" style="text-align: center; color: white;"></div> </div>
+
         #names-grid {
             display: grid; 
             grid-template-columns: repeat(3, 1fr);
@@ -206,7 +190,23 @@
                 <p id="daily-task-text" style="font-size: 16px; font-weight: bold; margin: 10px 0;"></p>
                 <button onclick="markTaskDone()" id="task-btn" style="background: var(--gold); color: black; padding: 5px 15px; border-radius: 20px; font-size: 12px;">Mark as Completed</button>
             </div>
-
+<div class="card" style="margin-top: 20px;"> <h3 style="color: gold;">5 Blessed Surahs 📖</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"> 
+        <button class="btn-secondary" onclick="openSurah('yaseen')">Surah Yaseen</button>
+        <button class="btn-secondary" onclick="openSurah('mulk')">Surah Al-Mulk</button> 
+        <button class="btn-secondary" onclick="openSurah('rahman')">Surah Ar-Rahman</button> 
+        <button class="btn-secondary" onclick="openSurah('kahf')">Surah Al-Kahf</button>
+        <button class="btn-secondary" style="grid-column: span 2;" onclick="openSurah('waqiah')">Surah Al-Waqiah</button>
+    </div> </div>
+<div id="surah-reader" 
+        style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0b0f1a; z-index: 9999; overflow-y: auto; padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid gold; padding-bottom: 10px; margin-bottom: 20px;">
+        <h2 id="reader-title" style="color: gold; margin: 0;"></h2> 
+        <button onclick="closeSurah()" 
+        style="background: gold; color: black; border: none; padding: 10px; border-radius: 5px; font-weight: bold; cursor: pointer;">✕ Close
+    </button>
+    </div>
+        <div id="surah-content" style="text-align: center; color: white;"></div> </div>
             <div class="card" style="margin-top: 20px;">
                 <h3 style="color: var(--gold);">99 Names of Allah ✨</h3>
                 <button onclick="openNamesGallery()" class="btn-primary" style="padding: 10px; margin-top: 10px;">Explore Gallery 📖</button>
@@ -760,9 +760,8 @@ function markTaskDone() {
     b.innerText = "Completed ✅ !ما شاء الله"; b.style.background = "#44ff44"; b.disabled = true;
 }
 const surahData = {
-  yaseen: {
-    title: "Surah Yaseen",
-    content: [
+    yaseen: { title: "Surah Yaseen",
+     content: [
       { ar: "يسٓ", ur: "یسٰٓ" },
       { ar: "وَٱلْقُرْءَانِ ٱلْحَكِيمِ", ur: "قسم ہے حکمت والے قرآن کی" },
       { ar: "إِنَّكَ لَمِنَ ٱلْمُرْسَلِينَ", ur: "بے شک آپ رسولوں میں سے ہیں" },
@@ -847,12 +846,9 @@ const surahData = {
       { ar: "إِنَّمَآ أَمْرُهُۥٓ إِذَآ أَرَادَ شَيْـًٔا أَن يَقُولَ لَهُۥ كُن فَيَكُونُ", ur: "اس کا کام تو بس یہی ہے کہ جب وہ کسی چیز کا ارادہ کرتا ہے تو اسے کہتا ہے کہ 'ہو جا' تو وہ ہو جاتی ہے" },
       { ar: "فَسُبْحَٰنَ ٱلَّذِى بِيَدِهِۦ مَلَكُوتُ كُلِّ شَىْءٍ وَإِلَيْهِ تُرْجَعُونَ", ur: "پس پاک ہے وہ ذات جس کے ہاتھ میں ہر چیز کی بادشاہی ہے اور اسی کی طرف تم لوٹائے جاؤ گے" }
     ]
-  }
-} },
-{
-  mulk: {
-    title: "Surah Al-Mulk",
-    content: [
+    },
+  mulk: {title: "Surah Al-Mulk",
+content: [
       { ar: "تَبَٰرَكَ ٱلَّذِى بِيَدِهِ ٱلْمُلْكُ وَهُوَ عَلَىٰ كُلِّ شَىْءٍ قَدِيرٌ", ur: "بڑی برکت والا ہے وہ جس کے ہاتھ میں بادشاہت ہے، اور وہ ہر چیز پر قادر ہے" },
       { ar: "ٱلَّذِى خَلَقَ ٱلْمَوْتَ وَٱلْحَيَوٰةَ لِيَبْلُوَكُمْ أَيُّكُمْ أَحْسَنُ عَمَلًا ۚ وَهُوَ ٱلْعَزِيزُ ٱلْغَفُورُ", ur: "جس نے موت اور زندگی کو پیدا کیا تاکہ تمہیں آزمائے کہ تم میں سے کس کے عمل زیادہ اچھے ہیں، اور وہ زبردست (اور) بخشنے والا ہے" },
       { ar: "ٱلَّذِى خَلَقَ سَبْعَ سَمَٰوَٰتٍ طِبَاقًا ۖ مَّا تَرَىٰ فِى خَلْقِ ٱلرَّحْمَٰنِ مِن تَفَٰوُتٍ ۖ فَٱرْجِعِ ٱلْبَصَرَ هَلْ تَرَىٰ مِن فُطُورٍ", ur: "جس نے سات آسمان اوپر تلے بنائے، تو رحمٰن کی آفرینش میں کوئی کسر نہ دیکھے گا، سو تو پھر نگاہ ڈال، کیا تجھے کوئی شگاف نظر آتا ہے؟" },
@@ -884,9 +880,7 @@ const surahData = {
       { ar: "قُلْ هُوَ ٱلرَّحْمَٰنُ ءَامَنَّا بِهِۦ وَعَلَيْهِ تَوَكَّلْنَا ۖ فَسَتَعْلَمُونَ مَنْ هُوَ فِى ضَلَٰلٍ مُّبِينٍ", ur: "آپ فرما دیں وہ رحمٰن ہے ہم اس پر ایمان لائے اور اسی پر ہم نے بھروسہ کیا، سو تمہیں جلد معلوم ہو جائے گا کہ کھلی گمراہی میں کون ہے" },
       { ar: "قُلْ أَرَءَيْتُمْ إِنْ أَصْبَحَ مَآؤُكُمْ غَوْرًا فَمَن يَأْتِيكُم بِمَآءٍ مَّعِينٍۭ", ur: "آپ فرما دیں دیکھو تو صحیح، اگر تمہارا پانی زمین میں خشک ہو جائے تو کون ہے جو تمہارے پاس بہتا ہوا پانی لائے؟" }
     ]
-  }
-}},
-{
+  },
   rahman: {
     title: "Surah Ar-Rahman",
     content: [
@@ -968,13 +962,11 @@ const surahData = {
       { ar: "مُتَّكِـِٔينَ عَلَىٰ رَفْرَفٍ خُضْرٍ وَعَبْقَرِيٍّ حِسَانٍ", ur: "وہ سبز قالینوں اور نفیس خوبصورت بستروں پر تکیہ لگائے ہوں گے" },
       { ar: "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ", ur: "پس تم اپنے رب کی کون کون سی نعمتوں کو جھٹلاؤ گے؟" },
       { ar: "تَبَٰرَكَ ٱسْمُ رَبِّكَ ذِى ٱلْجَلَٰلِ وَٱلْإِكْرَامِ", ur: "آپ کے رب کا نام بڑی برکت والا ہے جو جلال اور انعام والا ہے" }
-    ]
-  }
-} },
-{
-  kahf: {
-    title: "Surah Al-Kahf",
-    content: [
+ ]
+    }, // <-- Yahan comma zaroori hai taake agla Surah shuru ho sake
+    kahf: {
+        title: "Surah Al-Kahf",
+        content: [
       { ar: "ٱلْحَمْدُ لِلَّهِ ٱلَّذِىٓ أَنزَلَ عَلَىٰ عَبْدِهِ ٱلْكِتَٰبَ وَلَمْ يَجْعَل لَّهُۥ عِوَجَاۜ", ur: "تمام تعریفیں اللہ کے لیے ہیں جس نے اپنے بندے پر کتاب نازل کی اور اس میں کوئی کجی نہ رکھی" },
       { ar: "قَيِّمًا لِّيُنذِرَ بَأْسًا شَدِيدًا مِّن لَّدُنْهُ وَيُبَشِّرَ ٱلْمُؤْمِنِينَ ٱلَّذِينَ يَعْمَلُونَ ٱلصَّٰلِحَٰتِ أَنَّ لَهُمْ أَجْرًا حَسَنًا", ur: "سیدھی کتاب تاکہ وہ اللہ کے سخت عذاب سے ڈرائے اور ایمان والوں کو جو نیک عمل کرتے ہیں خوشخبری دے کہ ان کے لیے اچھا اجر ہے" },
       { ar: "مَّٰكِثِينَ فِيهِ أَبَدًا", ur: "وہ اس میں ہمیشہ رہیں گے" },
@@ -1085,10 +1077,9 @@ const surahData = {
       { ar: "خَٰلِدِينَ فِيهَا لَا يَبْغُونَ عَنْهَا حِوَلًا", ur: "وہ اس میں ہمیشہ رہیں گے، وہاں سے جگہ بدلنا نہیں چاہیں گے" },
       { ar: "قُل لَّوْ كَانَ ٱلْبَحْرُ مِدَادًا لِّكَلِمَٰتِ رَبِّى لَنَفِدَ ٱلْبَحْرُ قَبْلَ أَن تَنفَدَ كَلِمَٰتُ رَبِّى وَلَوْ جِئْنَا بِمِثْلِهِۦ مَدَدًا", ur: "آپ فرما دیں کہ اگر سمندر میرے رب کی باتوں کو لکھنے کے لیے روشنائی بن جائے تو میرے رب کی باتیں ختم ہونے سے پہلے سمندر ختم ہو جائے گا، اگرچہ ہم اس جیسا اور (سمندر) اس کی مدد کے لیے لے آئیں" },
       { ar: "قُلْ إِنَّمَآ أَنَا۟ بَشَرٌ مِّثْلُكُمْ يُوحَىٰٓ إِلَىَّ أَنَّمَآ إِلَٰهُكُمْ إِلَٰهٌ وَٰحِدٌ ۖ فَمَن كَانَ يَرْجُوا۟ لِقَآءَ رَبِّهِۦ فَلْيَعْمَلْ عَمَلًا صَٰلِحًا وَلَا يُشْرِكْ بِعِبَادَةِ رَبِّهِۦٓ أَحَدًا", ur: "آپ فرما دیں کہ میں تو تم جیسا ہی ایک بشر ہوں (فرق یہ ہے کہ) میری طرف وحی کی جاتی ہے کہ تمہارا معبود صرف ایک ہی معبود ہے، تو جو اپنے رب کی ملاقات کی امید رکھتا ہے اسے چاہیے کہ نیک عمل کرے اور اپنے رب کی عبادت میں کسی کو شریک نہ ٹھہرائے" }
-    ]
-  }
-} },
-{
+   ]
+    }, // <-- Yahan comma zaroori hai taake agla Surah shuru ho sake
+    
   waqiah: {
     title: "Surah Al-Waqi'ah",
     content: [
@@ -1189,18 +1180,41 @@ const surahData = {
       { ar: "إِنَّ هَٰذَا لَهُوَ حَقُّ ٱلْيَقِينِ", ur: "بے شک یہ بات سراسر حق اور یقینی ہے" },
       { ar: "فَسَبِّحْ بِٱسْمِ رَبِّكَ ٱلْعَظِيمِ", ur: "تو آپ اپنے بڑے رب کے نام کی تسبیح کریں" }
     ]
-  }
-}};
-function openSurah(key) {const s = surahData[key];
-const container = document.getElementById('surah-content');
-document.getElementById('reader-title').innerText = s.title;container.innerHTML = '';
-s.content.forEach(ayat => {container.innerHTML += `<div style="margin-bottom: 30px; border-bottom: 1px solid rgba(255,215,0,0.1);
-padding-bottom: 15px;"><p style="font-size: 30px; line-height: 2; direction: rtl;">${ayat.ar}&lt;/p&gt;
-&lt;p style=&quot;color: gold; font-size: 18px;&quot;&gt;
-${ayat.ur}</p></div>`;});document.getElementById('surah-reader').style.display = 'block';
-document.body.style.overflow = 'hidden';}
-function closeSurah() {document.getElementById('surah-reader').style.display = 'none';
-document.body.style.overflow = 'auto';}
+ } // Placeholder
+};
+function openSurah(key) {
+    const s = surahData[key];
+    const container = document.getElementById('surah-content');
+    document.getElementById('reader-title').innerText = s.title;
+    
+    // Build the string first for better performance
+let surahHTML = '';
+
+// Loop shuru karne se pehle check kar lein ke content mojood hai
+if (s && s.content) {
+    s.content.forEach(ayat => {
+        surahHTML += `
+            <div style="margin-bottom: 30px; border-bottom: 1px solid rgba(255,215,0,0.1); padding-bottom: 15px;">
+                <p style="font-family: 'Amiri', serif; font-size: 32px; line-height: 2.2; direction: rtl; text-align: right; margin-bottom: 10px; color: white;">
+                    ${ayat.ar}
+                </p>
+                
+                <p style="color: #FFD700; font-size: 19px; line-height: 1.6; direction: rtl; text-align: right;">
+                    ${ayat.ur}
+                </p>
+            </div>`;
+    });
+} else {
+    surahHTML = '<p style="color: white; text-align: center;">Content loading error...</p>';
+}
+
+// Final output container mein daal dein
+document.getElementById('surah-content').innerHTML = surahHTML;
+
+    container.innerHTML = surahHTML;
+    document.getElementById('surah-reader').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
     
 const checks = document.querySelectorAll('.salah-check');
 checks.forEach((check, i) => {
