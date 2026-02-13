@@ -239,10 +239,9 @@ body.day-mode .card {
                 <h4 style="color: var(--gold); margin: 0; font-size: 14px; text-transform: uppercase;">✨ Today's Task</h4>
                 <p id="daily-task-text" style="font-size: 16px; font-weight: bold; margin: 10px 0;"></p>
                 <button onclick="markTaskDone()" id="task-btn" style="background: var(--gold); color: black; padding: 5px 15px; border-radius: 20px; font-size: 12px;">Mark as Completed</button>
-            </div>
-              <div id="mini-surah-btn" onclick="openMiniSurahList()" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000; background: var(--gold); color: black; padding: 12px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.4); cursor: pointer; text-align: center; max-width: 200px;">
-    <strong style="font-size: 13px; display: block;">At least read one mini Surah in day</strong>
-    <span style="font-size: 12px; opacity: 0.9;">کیا آپ آج قرآن نہیں پڑھیں گے؟</span>
+           <div id="mini-surah-btn" style="position: fixed; bottom: 20px; right: 20px; z-index: 15000; background: #ffd700; color: #000; padding: 12px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); cursor: move; text-align: center; width: 200px; border: 2px solid #fff;">
+<span id="surah-reminder-text" style="font-size: 14px; font-weight: bold; display: block; line-height: 1.4;">
+</span>
 </div>
 
 <div id="mini-surahs-list-overlay" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index: 10001; overflow-y: auto; padding: 20px;">
@@ -266,7 +265,7 @@ body.day-mode .card {
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid gold; padding-bottom: 10px; margin-bottom: 20px;">
         <h2 id="reader-title" style="color: gold; margin: 0;"></h2> 
         <button onclick="closeSurah()" 
-        style="background: gold; color: black; border: none; padding: 10px; border-radius: 5px; font-weight: bold; cursor: pointer;">✕ Close
+        style="background: gold; color: black; border: none; padding: 30px; border-radius: 5px; font-weight: bold; cursor: pointer;">✕ Close
     </button>
     </div>
         <div id="surah-content" style="text-align: center; color: white;"></div> </div>
@@ -716,6 +715,7 @@ function exitSlides() {
     document.getElementById('home-dashboard').classList.remove('hidden');
     document.getElementById('main-slides').classList.add('hidden');
 }
+    
 function toggleTheme() {
     const body = document.body;
     const btn = document.getElementById('theme-toggle');
@@ -753,7 +753,65 @@ function showRandomDua() {
     document.getElementById('dua-arabic').innerText = random.ar;
     document.getElementById('dua-urdu').innerText = random.ur;
 }
+const messages = [
+"کیا آج آپ قرآن نہیں پڑھیں گے؟",
+"کیا آپ جاننا چاہتے ہیں اللہ آج آپ کو کیا کہہ رہا ہے؟",
+"قرآن کو پسِ پشت مت ڈالیں، یہ آپ کی نجات کا ذریعہ ہے۔",
+"آج کی ایک چھوٹی سی سورت، آپ کے دن میں برکت کے لیے۔",
+"تھوڑا وقت نکالیں، قرآن سے اپنا رشتہ جوڑیں۔"
+];
 
+function updateMiniSurahWidget() {
+const btn = document.getElementById('mini-surah-btn');
+const textElem = document.getElementById('surah-reminder-text');
+const today = new Date().toDateString();
+const hasRead = localStorage.getItem('surah_read_today') === today;
+
+// Sirf Dashboard par dikhane ki logic
+const dashboard = document.getElementById('home-dashboard');
+if (dashboard && dashboard.style.display === 'none') {
+btn.style.display = 'none';
+} else {
+btn.style.display = 'block';
+}
+
+// Satisfaction check logic
+if (hasRead) {
+textElem.innerHTML = "Satisfaction ✅";
+} else {
+const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+textElem.innerHTML = randomMsg;
+}
+}
+
+// Button ko mouse se hilane (Drag) ki logic
+function makeDraggable(elementId) {
+const el = document.getElementById(elementId);
+if (!el) return;
+let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+el.onmousedown = function(e) {
+e.preventDefault();
+pos3 = e.clientX;
+pos4 = e.clientY;
+document.onmouseup = () => { document.onmouseup = null; document.onmousemove = null; };
+document.onmousemove = (e) => {
+e.preventDefault();
+pos1 = pos3 - e.clientX;
+pos2 = pos4 - e.clientY;
+pos3 = e.clientX;
+pos4 = e.clientY;
+el.style.top = (el.offsetTop - pos2) + "px";
+el.style.left = (el.offsetLeft - pos1) + "px";
+el.style.bottom = "auto";
+el.style.right = "auto";
+};
+};
+}
+
+// Inhe chalanay ke liye call karein
+updateMiniSurahWidget();
+makeDraggable("mini-surah-btn");
+makeDraggable("theme-toggle");
 function calculateZakat() {
     const amount = document.getElementById('zakat-amount').value;
     if (amount > 0) {
@@ -1343,6 +1401,7 @@ function showSparkleFeedback() {
 </script>
 </body>
 </html>
+
 
 
 
