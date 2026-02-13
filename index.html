@@ -214,9 +214,9 @@ body.day-mode .card {
 <div style="text-align: right; padding: 10px;">
    <button id="theme-toggle" onclick="toggleTheme()">☀️ </button>
 </div>
-            <div id="mini-surah-btn" onclick="openMiniSurahList()" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000; background: var(--gold); color: black; padding: 12px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.4); cursor: pointer; text-align: center; max-width: 200px;">
+         <div id="mini-surah-btn" onclick="openMiniSurahList()" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000; background: var(--gold); color: black; padding: 12px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.4); cursor: pointer; text-align: center; max-width: 200px;">
     <strong style="font-size: 13px; display: block;">At least read one mini Surah in day</strong>
-    <span style="font-size: 10px; opacity: 0.9;">کم از کم دن میں ایک چھوٹی سورہ پڑھیں</span>
+    <span style="font-size: 12px; opacity: 0.9;">کیا آپ آج قرآن نہیں پڑھیں گے؟</span>
 </div>
 
 <div id="mini-surah-list-overlay" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index: 10001; overflow-y: auto; padding: 20px;">
@@ -1714,45 +1714,54 @@ kafirun: {
 }
 };
 
-// Selection list kholna
-function openMiniSurahList() {
+// Overlay kholne ka function
+function openMiniSurahsList() {
     const grid = document.getElementById('mini-buttons-grid');
-    grid.innerHTML = '';
-    Object.keys(miniSurahs).forEach(key => {
-        grid.innerHTML += `<button class="btn-secondary" onclick="openMiniReader('${key}')" style="padding:15px; font-size:14px;">${miniSurahs[key].title}</button>`;
+    grid.innerHTML = ''; // Pehle wala clear
+    
+    Object.keys(miniSurahsData).forEach(key => {
+        const s = miniSurahsData[key];
+        grid.innerHTML += `
+            <button onclick="displayMiniSurahs('${key}')" style="background: rgba(255,215,0,0.1); border: 1px solid #ffd700; color: #fff; padding: 15px; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: bold;">
+                ${s.title}
+            </button>
+        `;
     });
-    document.getElementById('mini-surah-list-overlay').style.display = 'block';
+    
+    document.getElementById('mini-surahs-list-overlay').style.display = 'block';
+    document.body.style.overflow = 'hidden';
 }
 
-function closeMiniSurahList() {
-    document.getElementById('mini-surah-list-overlay').style.display = 'none';
+function closeMiniSurahsList() {
+    document.getElementById('mini-surahs-list-overlay').style.display = 'none';
+    document.body.style.overflow = 'auto';
 }
 
-// Reader screen kholna (Wahi purana reader function use karenge bas content change hoga)
-function openMiniReader(key) {
-    const s = miniSurahs[key];
+// Surah show karne ka function
+function displayMiniSurahs(key) {
+    const s = miniSurahsData[key];
     const container = document.getElementById('surah-content');
     const reader = document.getElementById('surah-reader');
     
     document.getElementById('reader-title').innerText = s.title;
-    container.innerHTML = ''; 
+    container.innerHTML = '';
 
     s.content.forEach(ayat => {
         container.innerHTML += `
             <div style="margin-bottom: 40px; padding: 0 25px; box-sizing: border-box; text-align: center;">
-                <p class="arabic" style="font-size: 26px; line-height: 1.8; direction: rtl; color: white;">${ayat.ar}</p>
-                <p style="color: gold; font-size: 18px; margin-top: 10px;">${ayat.ur}</p>
+                <p style="font-size: 22px; line-height: 2; color: white; direction: rtl;">${ayat.ar}</p>
+                <p style="color: #ffd700; font-size: 18px; margin-top: 15px;">${ayat.ur}</p>
             </div>
         `;
     });
 
-    closeMiniSurahList(); // Selection list band karein
+    closeMiniSurahList(); // List band karein
     reader.style.display = 'block'; // Reader overlay khol dein
-    document.body.style.overflow = 'hidden';
 }
 </script>
 </body>
 </html>
+
 
 
 
