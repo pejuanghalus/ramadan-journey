@@ -113,20 +113,39 @@
     --text-color: #ffffff;
     --gold: #ffd700;
 }
+/* Button ko Floating banane ke liye */
+#theme-toggle {
+    position: fixed; /* Ye line isay scroll ke sath sath rakhegi */
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    padding: 10px 18px;
+    border-radius: 50px;
+    border: none;
+    background: #ffd700; /* Gold color */
+    color: #000;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
-/* Day Mode Colors */
+/* Day Mode ke colors jo aankhon ko na chubhen */
 body.day-mode {
-    --bg-color: #f4f7f6;
-    --card-bg: #ffffff;
-    --text-color: #2d3436;
-    --gold: #b8860b; /* Thoda dark gold taake white par nazar aaye */
+    background-color: #d1d8e0 !important; /* Soft cool grey instead of white */
+   
 }
 
-body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    transition: 0.3s; /* Smooth switching ke liye */
+body.day-mode .card {
+    background: rgba(255, 255, 255, 0.8) !important;
+    color: #2d3436 !important;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0,0,0,0.1);
 }
+
+/* Day mode mein cards ko thoda "Glass" look dene ke liye */
 
 .card {
     background: var(--card-bg);
@@ -191,9 +210,7 @@ body {
                 <p id="countdown"></p>
             </div>
 <div style="text-align: right; padding: 10px;">
-    <button id="theme-toggle" onclick="toggleTheme()" style="background: var(--gold); border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; color: black;">
-        ☀️ Day Mode
-    </button>
+   <button id="theme-toggle" onclick="toggleTheme()">☀️ </button>
 </div>
             <div class="card">
                 <p style="margin-top:0">Daily Progress</p>
@@ -1309,6 +1326,7 @@ function showSparkleFeedback() {
 </script>
 </body>
 </html>
+
 
 
 
