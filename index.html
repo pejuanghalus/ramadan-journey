@@ -131,7 +131,35 @@
     align-items: center;
     gap: 8px;
 }
+#mini-surah-btn {
+    position: fixed !important;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    background: #ffd700;
+    color: #000;
+    padding: 12px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    width: 200px;
+    border: 2px solid #fff;
+    text-align: center;
+    cursor: pointer; /* Ab sirf click ka nishan ayega */
+    display: none; /* Initially hide, JS will show it on Home */
+}
 
+#surah-reminder-text {
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+    line-height: 1.4;
+}
+
+/* Jab mouse upar aye to halka sa glow */
+#mini-surah-btn:hover {
+    background: #ffecb3;
+    transition: 0.3s;
+}
 /* Day Mode ke colors jo aankhon ko na chubhen */
 body.day-mode {
     --bg-color: #5d001e; /* Deep Maroon Color */
@@ -239,9 +267,9 @@ body.day-mode .card {
                 <h4 style="color: var(--gold); margin: 0; font-size: 14px; text-transform: uppercase;">✨ Today's Task</h4>
                 <p id="daily-task-text" style="font-size: 16px; font-weight: bold; margin: 10px 0;"></p>
                 <button onclick="markTaskDone()" id="task-btn" style="background: var(--gold); color: black; padding: 5px 15px; border-radius: 20px; font-size: 12px;">Mark as Completed</button>
-           <div id="mini-surah-btn" style="position: fixed; bottom: 20px; right: 20px; z-index: 15000; background: #ffd700; color: #000; padding: 12px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); cursor: move; text-align: center; width: 200px; border: 2px solid #fff;">
-<span id="surah-reminder-text" style="font-size: 14px; font-weight: bold; display: block; line-height: 1.4;">
-</span>
+            </div>
+               <div id="mini-surah-btn" onclick="openMiniSurahList()">
+    <span id="surah-reminder-text"></span>
 </div>
 
 <div id="mini-surahs-list-overlay" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index: 10001; overflow-y: auto; padding: 20px;">
@@ -265,10 +293,11 @@ body.day-mode .card {
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid gold; padding-bottom: 10px; margin-bottom: 20px;">
         <h2 id="reader-title" style="color: gold; margin: 0;"></h2> 
         <button onclick="closeSurah()" 
-        style="background: gold; color: black; border: none; padding: 30px; border-radius: 5px; font-weight: bold; cursor: pointer;">✕ Close
+        style="background: red; color: black; border: none; padding: 30px; border-radius: 5px; font-weight: bold; cursor: pointer;"> Close ✕
     </button>
     </div>
         <div id="surah-content" style="text-align: center; color: white;"></div> </div>
+         
             <div class="card" style="margin-top: 20px;">
                 <h3 style="color: var(--gold);">99 Names of Allah ✨</h3>
                 <button onclick="openNamesGallery()" class="btn-primary" style="padding: 10px; margin-top: 10px;">Explore Gallery 📖</button>
@@ -290,7 +319,7 @@ body.day-mode .card {
                     </div>
                 </div>
             </div>
-        </div>
+       
         <div class="card" style="margin-top: 20px; border-bottom: 4px solid var(--gold);">
     <h3 style="color: var(--gold); margin-bottom: 5px;">40 Ahadees-e-Mubaraka 📖</h3>
     <p style="font-size: 10px; opacity: 0.7; margin-bottom: 15px;"> Virtues of Knowledge & Deen </p>
@@ -739,6 +768,7 @@ window.onload = () => {
         document.getElementById('theme-toggle').innerHTML = "🌙 Night Mode";
     }
 };
+    
 function updateCountdown() {
     const ramadanDate = new Date("February 18, 2026 00:00:00").getTime();
     const now = new Date().getTime();
@@ -818,15 +848,16 @@ const btn = document.getElementById('mini-surah-btn');
 const textElem = document.getElementById('surah-reminder-text');
 const today = new Date().toDateString();
 const hasRead = localStorage.getItem('surah_read_today') === today;
-
 // Sirf Dashboard par dikhane ki logic
+   // Agar home screen nazar aa rahi hai (block/flex hai) toh dikhao, warna chupao
+   
 const dashboard = document.getElementById('home-dashboard');
-if (dashboard && dashboard.style.display === 'none') {
-btn.style.display = 'none';
-} else {
-btn.style.display = 'block';
+ if (homeSection && (homeSection.style.display === 'block' || homeSection.style.display === '')) {
+        btn.style.setProperty('display', 'block', 'important');
+    } else {
+        btn.style.setProperty('display', 'none', 'important');
+    }
 }
-
 // Satisfaction check logic
 if (hasRead) {
 textElem.innerHTML = "Satisfaction ✅";
@@ -862,7 +893,6 @@ el.style.right = "auto";
 
 // Inhe chalanay ke liye call karein
 updateMiniSurahWidget();
-makeDraggable("mini-surah-btn");
 makeDraggable("theme-toggle");
     
 function createStars() {
@@ -903,6 +933,7 @@ function markTaskDone() {
     const b = document.getElementById('task-btn');
     b.innerText = "Completed ✅ !ما شاء الله"; b.style.background = "#44ff44"; b.disabled = true;
 }
+    
 const surahData = {
     yaseen: { title: "Surah Yaseen",
      content: [
@@ -1140,7 +1171,7 @@ content: [
       { ar: "وَٱتْلُ مَآ أُوحِىَ إِلَيْكَ مِن كِتَابِ رَبِّكَ ۖ لَا مُبَدِّلَ لِكَلِمَٰتِهِۦ وَلَن تَجِدَ مِن دُونِهِۦ مُلْتَحَدًا", ur: "اور آپ کے رب کی کتاب میں سے جو آپ کی طرف وحی کیا گیا اسے پڑھ کر سنائیں، اس کی باتوں کو کوئی بدلنے والا نہیں اور آپ اس کے سوا ہرگز کوئی پناہ گاہ نہ پائیں گے" },
       { ar: "وَٱصْبِرْ نَفْسَكَ مَعَ ٱلَّذِينَ يَدْعُونَ رَبَّهُم بِٱلْغَدَوٰةِ وَٱلْعَشِىِّ يُرِيدُونَ وَجْهَهُۥ ۖ وَلَا تَعْدُ عَيْنَاكَ عَنْهُمْ تُرِيدُ زِينَةَ ٱلْحَيَوٰةِ ٱلدُّنْيَا ۖ وَلَا تُطِعْ مَنْ أَغْفَلْنَا قَلْبَهُۥ عَن ذِكْرِنَا وَٱتَّبَعَ هَوَىٰهُ وَكَانَ أَمْرُهُۥ فُرُطًا", ur: "اور آپ اپنے آپ کو ان لوگوں کے ساتھ وابستہ رکھیں جو صبح و شام اپنے رب کو پکارتے ہیں، وہ اس کی رضا چاہتے ہیں، اور آپ کی آنکھیں ان سے نہ ہٹیں کہ آپ دنیاوی زندگی کی زینت چاہنے لگیں، اور اس شخص کا کہنا نہ مانیں جس کے دل کو ہم نے اپنی یاد سے غافل کر دیا اور اس نے اپنی خواہش کی پیروی کی اور اس کا معاملہ حد سے گزرا ہوا ہے" },
       { ar: "وَقُلِ ٱلْحَقُّ مِن رَّبِّكُمْ ۖ فَمَن شَآءَ فَلْيُؤْمِن وَمَن شَآءَ فَلْيَكْفُرْ ۚ إِنَّآ أَعْتَدْنَا لِلظَّٰلِمِينَ نَارًا أَحَاطَ بِهِمْ سُرَادِقُهَا ۚ وَإِن يَسْتَغِيثُوا۟ يُغَاثُوا۟ بِمَآءٍ كَالْمُهْلِ يَشْوِى ٱلْوُجُوهَ ۚ بِئْسَ ٱلشَّرَابُ وَسَآءَتْ مُرْتَفَقًا", ur: "اور فرما دیں کہ حق تمہارے رب کی طرف سے ہے، تو جو چاہے ایمان لائے اور جو چاہے کفر کرے، بے شک ہم نے ظالموں کے لیے آگ تیار کر رکھی ہے جس کی دیواروں نے انہیں گھیر لیا ہے، اور اگر وہ فریاد کریں گے تو ان کی فریاد ایسے پانی سے کی جائے گی جو پگھلے ہوئے تانبے کی طرح ہوگا جو چہروں کو بھون ڈالے گا، کیا ہی برا مشروب ہے اور کیا ہی بری آرام گاہ ہے" },
-      { ar: "إِنَّ ٱلَّذِينَ ءَامَنُوا۟ وَيَعْمَلُونَ ٱلصَّٰلِحَٰتِ إِنَّا لَا نُضِيعُ أَجْرَ مَنْ أَحْسَنَ عَمَلًا", ur: "بے شک جو لوگ ایمان لائے اور انہوں نے نیک عمل کیے، ہم اس کا اجر ضائع نہیں کرتے جس نے اچھے عمل کیے" },
+      { ar: "إِنَّ ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّـٰلِحَـٰتِ إِنَّا لَا نُضِيعُ أَجْرَ مَنْ أَحْسَنَ عَمَلًا", ur: "بے شک جو لوگ ایمان لائے اور انہوں نے نیک عمل کیے، ہم اس کا اجر ضائع نہیں کرتے جس نے اچھے عمل کیے" },
       { ar: "أُو۟لَٰٓئِكَ لَهُمْ جَنَّٰتُ عَدْنٍ تَجْرِي مِن تَحْتِهِمُ ٱلْأَنْهَٰرُ يُحَلَّوْنَ فِيهَا مِنْ أَسَاوِرَ مِن ذَهَبٍ وَيَلْبَسُونَ ثِيَابًا خُضْرًا مِّن سُندُسٍ وَإِسْتَبْرَقٍ مُّتَّكِئِينَ فِيهَا عَلَى ٱلْأَرَائِكِ ۚ نِعْمَ ٱلثَّوَابُ وَحُسْنَتْ مُرْتَفَقًا", ur: "ان کے لیے ہمیشہ رہنے کے باغات ہیں جن کے نیچے سے نہریں بہتی ہیں، انہیں وہاں سونے کے کنگن پہنائے جائیں گے اور وہ باریک اور دبیز ریشم کے سبز کپڑے پہنیں گے، وہاں تختوں پر تکیہ لگائے ہوں گے، کیا ہی اچھا اجر ہے اور کیا ہی عمدہ آرام گاہ ہے" },
       { ar: "۞ وَٱضْرِبْ لَهُم مَّثَلًا رَّجُلَيْنِ جَعَلْنَا لِأَحَدِهِمَا جَنَّتَيْنِ مِنْ أَعْنَٰبٍ وَحَفَفْنَٰهُمَا بِنَخْلٍ وَجَعَلْنَا بَيْنَهُمَا زَرْعًا", ur: "اور ان کے سامنے دو شخصوں کی مثال بیان کریں جن میں سے ایک کو ہم نے انگوروں کے دو باغ دیے تھے اور ان کے گرد کھجوروں کی باڑ لگائی تھی اور ان کے درمیان کھیتی رکھی تھی" },
       { ar: "كِلْتَا ٱلْجَنَّتَيْنِ ءَاتَتْ أُكُلَهَا وَلَمْ تَظْلِم مِّنْهُ شَيْـًٔا ۚ وَفَجَّرْنَا خِلَٰلَهُمَا نَهَرًا", ur: "دونوں باغ اپنا پھل لائے اور اس میں کوئی کمی نہ کی، اور ہم نے ان کے درمیان ایک نہر جاری کر دی" },
@@ -1217,7 +1248,7 @@ content: [
       { ar: "ٱلَّذِينَ ضَلَّ سَعْيُهُمْ فِى ٱلْحَيَوٰةِ ٱلدُّنْيَا وَهُمْ يَحْسَبُونَ أَنَّهُمْ يُحْسِنُونَ صُنْعًا", ur: "وہ لوگ جن کی کوشش دنیاوی زندگی میں ضائع ہو گئی اور وہ سمجھتے رہے کہ وہ اچھے کام کر رہے ہیں" },
       { ar: "أُو۟لَٰٓئِكَ ٱلَّذِينَ كَفَرُوا۟ بِـَٔايَٰتِ رَبِّهِمْ وَلِقَآئِهِۦ فَحَبِطَتْ أَعْمَٰلُهُمْ فَلَا نُقِيمُ لَهُمْ يَوْمَ ٱلْقِيَٰمَةِ وَزْنًا", ur: "یہی وہ لوگ ہیں جنہوں نے اپنے رب کی نشانیوں اور اس کی ملاقات کا انکار کیا تو ان کے عمل ضائع ہو گئے سو ہم قیامت کے دن ان کے لیے کوئی وزن قائم نہ کریں گے" },
       { ar: "ذَٰلِكَ جَزَآؤُهُمْ جَهَنَّمُ بِمَا كَفَرُوا۟ وَٱتَّخَذُوٓا۟ ءَايَٰتِى وَرُسُلِى هُزُوًا", ur: "یہ ان کا بدلہ جہنم ہے اس وجہ سے کہ انہوں نے کفر کیا اور میری نشانیوں اور میرے رسولوں کا مذاق اڑایا" },
-      { ar: "إِنَّ ٱلَّذِينَ ءَامَنُوا۟ وَيَعْمَلُونَ ٱلصَّٰلِحَٰتِ كَانَتْ لَهُمْ جَنَّٰتُ ٱلْفِرْدَوْسِ نُزُلًا", ur: "بے شک جو لوگ ایمان لائے اور انہوں نے نیک عمل کیے ان کی مہمانی کے لیے فردوس کے باغات ہوں گے" },
+      { ar: "إِنَّ ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّـٰلِحَـٰتِ كَانَتْ لَهُمْ جَنَّٰتُ ٱلْفِرْدَوْسِ نُزُلًا", ur: "بے شک جو لوگ ایمان لائے اور انہوں نے نیک عمل کیے ان کی مہمانی کے لیے فردوس کے باغات ہوں گے" },
       { ar: "خَٰلِدِينَ فِيهَا لَا يَبْغُونَ عَنْهَا حِوَلًا", ur: "وہ اس میں ہمیشہ رہیں گے، وہاں سے جگہ بدلنا نہیں چاہیں گے" },
       { ar: "قُل لَّوْ كَانَ ٱلْبَحْرُ مِدَادًا لِّكَلِمَٰتِ رَبِّى لَنَفِدَ ٱلْبَحْرُ قَبْلَ أَن تَنفَدَ كَلِمَٰتُ رَبِّى وَلَوْ جِئْنَا بِمِثْلِهِۦ مَدَدًا", ur: "آپ فرما دیں کہ اگر سمندر میرے رب کی باتوں کو لکھنے کے لیے روشنائی بن جائے تو میرے رب کی باتیں ختم ہونے سے پہلے سمندر ختم ہو جائے گا، اگرچہ ہم اس جیسا اور (سمندر) اس کی مدد کے لیے لے آئیں" },
       { ar: "قُلْ إِنَّمَآ أَنَا۟ بَشَرٌ مِّثْلُكُمْ يُوحَىٰٓ إِلَىَّ أَنَّمَآ إِلَٰهُكُمْ إِلَٰهٌ وَٰحِدٌ ۖ فَمَن كَانَ يَرْجُوا۟ لِقَآءَ رَبِّهِۦ فَلْيَعْمَلْ عَمَلًا صَٰلِحًا وَلَا يُشْرِكْ بِعِبَادَةِ رَبِّهِۦٓ أَحَدًا", ur: "آپ فرما دیں کہ میں تو تم جیسا ہی ایک بشر ہوں (فرق یہ ہے کہ) میری طرف وحی کی جاتی ہے کہ تمہارا معبود صرف ایک ہی معبود ہے، تو جو اپنے رب کی ملاقات کی امید رکھتا ہے اسے چاہیے کہ نیک عمل کرے اور اپنے رب کی عبادت میں کسی کو شریک نہ ٹھہرائے" }
@@ -1402,6 +1433,7 @@ function showSparkleFeedback() {
 </script>
 </body>
 </html>
+
 
 
 
