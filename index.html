@@ -747,12 +747,64 @@ function updateCountdown() {
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     document.getElementById("countdown").innerHTML = diff > 0 ? `🌙 ${days} Days & ${hours} Hours until Ramadan` : "✨ Ramadan Kareem!";
 }
-
+updateCountdown();
 function showRandomDua() {
     const random = dailyDuas[Math.floor(Math.random() * dailyDuas.length)];
     document.getElementById('dua-arabic').innerText = random.ar;
     document.getElementById('dua-urdu').innerText = random.ur;
 }
+showRandomDua();
+function calculateZakat() {
+    const amount = document.getElementById('zakat-amount').value;
+    if (amount > 0) {
+        document.getElementById('zakat-value').innerText = (amount * 0.025).toLocaleString();
+        document.getElementById('zakat-result-box').classList.remove('hidden');
+    }
+}
+
+
+function countUp() { count++; document.getElementById('t-count').innerText = count; }
+function resetCount() { count = 0; document.getElementById('t-count').innerText = count; }
+
+function toggleAudio() {
+    if (music.paused) { music.play(); audioBtn.innerText = "🔊"; }
+    else { music.pause(); audioBtn.innerText = "🔇"; }
+}
+
+function openNamesGallery() {
+    const grid = document.getElementById('names-grid');
+    grid.innerHTML = '';
+    fullNamesList.forEach(item => {
+        grid.innerHTML += `<div class="name-box"><h3>${item.ar}</h3><p>${item.en}</p></div>`;
+    });
+    document.getElementById('names-gallery').classList.remove('hidden');
+    music.pause();
+    document.getElementById('namesAudio').play();
+}
+
+function closeNamesGallery() {
+    document.getElementById('names-gallery').classList.add('hidden');
+    document.getElementById('namesAudio').pause();
+}
+    let currentHadithIndex = 0;
+
+function showNextHadith() {
+    const h = fortyHadith[currentHadithIndex];
+    
+    // Elements ko update karna
+    document.getElementById('hadith-no').innerText = `Hadith #${h.no} of 40`;
+    document.getElementById('hadith-ar').innerText = h.ar;
+    document.getElementById('hadith-ur').innerText = h.ur;
+    document.getElementById('hadith-ref').innerText = `[Ref: ${h.ref}]`;
+
+    // Index barhana ya wapis 0 par lana
+    currentHadithIndex = (currentHadithIndex + 1) % fortyHadith.length;
+}
+
+// App start hote hi pehli hadith dikhane ke liye
+document.addEventListener('DOMContentLoaded', () => {
+    showNextHadith(); 
+});
 const messages = [
 "کیا آج آپ قرآن نہیں پڑھیں گے؟",
 "کیا آپ جاننا چاہتے ہیں اللہ آج آپ کو کیا کہہ رہا ہے؟",
@@ -812,57 +864,7 @@ el.style.right = "auto";
 updateMiniSurahWidget();
 makeDraggable("mini-surah-btn");
 makeDraggable("theme-toggle");
-function calculateZakat() {
-    const amount = document.getElementById('zakat-amount').value;
-    if (amount > 0) {
-        document.getElementById('zakat-value').innerText = (amount * 0.025).toLocaleString();
-        document.getElementById('zakat-result-box').classList.remove('hidden');
-    }
-}
-
-function countUp() { count++; document.getElementById('t-count').innerText = count; }
-function resetCount() { count = 0; document.getElementById('t-count').innerText = count; }
-
-function toggleAudio() {
-    if (music.paused) { music.play(); audioBtn.innerText = "🔊"; }
-    else { music.pause(); audioBtn.innerText = "🔇"; }
-}
-
-function openNamesGallery() {
-    const grid = document.getElementById('names-grid');
-    grid.innerHTML = '';
-    fullNamesList.forEach(item => {
-        grid.innerHTML += `<div class="name-box"><h3>${item.ar}</h3><p>${item.en}</p></div>`;
-    });
-    document.getElementById('names-gallery').classList.remove('hidden');
-    music.pause();
-    document.getElementById('namesAudio').play();
-}
-
-function closeNamesGallery() {
-    document.getElementById('names-gallery').classList.add('hidden');
-    document.getElementById('namesAudio').pause();
-}
-    let currentHadithIndex = 0;
-
-function showNextHadith() {
-    const h = fortyHadith[currentHadithIndex];
     
-    // Elements ko update karna
-    document.getElementById('hadith-no').innerText = `Hadith #${h.no} of 40`;
-    document.getElementById('hadith-ar').innerText = h.ar;
-    document.getElementById('hadith-ur').innerText = h.ur;
-    document.getElementById('hadith-ref').innerText = `[Ref: ${h.ref}]`;
-
-    // Index barhana ya wapis 0 par lana
-    currentHadithIndex = (currentHadithIndex + 1) % fortyHadith.length;
-}
-
-// App start hote hi pehli hadith dikhane ke liye
-document.addEventListener('DOMContentLoaded', () => {
-    showNextHadith(); 
-});
-
 function createStars() {
     const container = document.getElementById('stars');
     for (let i = 0; i < 80; i++) {
@@ -893,8 +895,7 @@ document.addEventListener('mousemove', (e) => {
 });
 
 // Init
-updateCountdown();
-showRandomDua();
+
 createStars();
 const taskIndex = Math.floor(Math.random() * ramadanTasks.length);
 document.getElementById('daily-task-text').innerText = ramadanTasks[taskIndex];
@@ -1401,6 +1402,7 @@ function showSparkleFeedback() {
 </script>
 </body>
 </html>
+
 
 
 
