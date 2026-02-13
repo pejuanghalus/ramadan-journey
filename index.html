@@ -134,18 +134,20 @@
 
 /* Day Mode ke colors jo aankhon ko na chubhen */
 body.day-mode {
-    background-color: #800000 !important; /* Soft cool grey instead of white */
-   
+    --bg-color: #5d001e; /* Deep Maroon Color */
+    --card-bg: rgba(255, 255, 255, 0.1); /* Transparent Glass look */
+    --gold: #ffd700; /* Bright Gold */
 }
 
+/* Day mode mein cards ko mazeed nikharny ke liye */
 body.day-mode .card {
-    background: rgba(255, 255, 255, 0.8) !important;
-    color: #2d3436 !important;
+    background: rgba(255, 255, 255, 0.1) !important;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3) !important;
+    color: white !important;
 }
 
-/* Day mode mein cards ko thoda "Glass" look dene ke liye */
+
 
 .card {
     background: var(--card-bg);
@@ -1326,6 +1328,7 @@ function showSparkleFeedback() {
 </script>
 </body>
 </html>
+
 
 
 
