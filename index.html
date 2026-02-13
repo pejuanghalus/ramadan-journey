@@ -240,6 +240,19 @@ body.day-mode .card {
                 <p id="daily-task-text" style="font-size: 16px; font-weight: bold; margin: 10px 0;"></p>
                 <button onclick="markTaskDone()" id="task-btn" style="background: var(--gold); color: black; padding: 5px 15px; border-radius: 20px; font-size: 12px;">Mark as Completed</button>
             </div>
+              <div id="mini-surah-btn" onclick="openMiniSurahList()" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000; background: var(--gold); color: black; padding: 12px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.4); cursor: pointer; text-align: center; max-width: 200px;">
+    <strong style="font-size: 13px; display: block;">At least read one mini Surah in day</strong>
+    <span style="font-size: 12px; opacity: 0.9;">کیا آپ آج قرآن نہیں پڑھیں گے؟</span>
+</div>
+
+<div id="mini-surahs-list-overlay" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index: 10001; overflow-y: auto; padding: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px;">
+        <h2 style="color: var(--gold); margin:0;">Select Surah</h2>
+        <button onclick="closeMiniSurahList()" style="background: var(--gold); border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold;">✕ Close</button>
+    </div>
+    <div id="mini-buttons-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        </div>
+</div>
 <div class="card" style="margin-top: 20px;"> <h3 style="color: gold;">5 Blessed Surahs 📖</h3>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"> 
         <button class="btn-secondary" onclick="openSurah('yaseen')">Surah Yaseen</button>
@@ -1254,6 +1267,7 @@ content: [
     ]
  } // Placeholder
 };
+    
 function openSurah(key) {
     const s = surahData[key];
     const container = document.getElementById('surah-content');
@@ -1280,8 +1294,7 @@ if (s && s.content) {
     surahHTML = '<p style="color: white; text-align: center;">Content loading error...</p>';
 }
 
-// Final output container mein daal dein
-// Naya polished code taake words na katen
+
 // Arabic margin aur size fix version
 container.innerHTML = s.content.map(ayat => `
     <div style="margin-bottom: 40px; padding: 0 25px; box-sizing: border-box; width: 100%; text-align: center;">
@@ -1330,6 +1343,7 @@ function showSparkleFeedback() {
 </script>
 </body>
 </html>
+
 
 
 
