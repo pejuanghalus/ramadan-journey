@@ -1546,10 +1546,15 @@ function startAppFromHome() {
     if(audioBtn) audioBtn.innerText = "🔊";
     index = 0; render();
 }
-
+index = 0; 
+        render(); // This ensures cards show up immediately
+        updateMiniSurahWidget();
+    }
+}
 function exitSlides() {
     document.getElementById('home-dashboard').classList.remove('hidden');
     document.getElementById('main-slides').classList.add('hidden');
+    updateMiniSurahWidget();
 }
 
 function toggleTheme() {
@@ -1685,6 +1690,7 @@ function makeDraggable(elementId) {
         };
     };
 }
+    makeDraggable("theme-toggle");
 
 function createStars() {
     const container = document.getElementById('stars');
@@ -1813,6 +1819,7 @@ function closeSurah() {
 </script>
 </body>
 </html>
+
 
 
 
