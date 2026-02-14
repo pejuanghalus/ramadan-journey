@@ -708,234 +708,6 @@ const fortyHadith = [
     "ref": "Shu'ab al-Iman: 1574 (Weak)"
 }
 ];
-
-let index = 0;
-let count = 0;
-const music = document.getElementById('bgMusic');
-const audioBtn = document.getElementById('audioBtn');
-
-function render() {
-    const p = pages[index];
-    if(!p) return; // Guard clause
-    const isLast = index === pages.length - 1;
-    const isFirst = index === 0;
-    document.getElementById("bar").style.width = `${((index + 1) / pages.length) * 100}%`;
-    document.getElementById("content").innerHTML = `
-        <small style="color:var(--gold)">STEP ${index + 1} OF ${pages.length}</small>
-        <h2 style="margin: 15px 0;">${p.title}</h2>
-        ${p.arabic ? `<div class="arabic">${p.arabic}</div>` : ""}
-        ${p.urdu ? `<div class="urdu">${p.urdu}</div>` : ""}
-        <p style="font-size:14px; opacity:0.9;">${p.body}</p>
-        <div style="display:flex; gap:10px; margin-top:20px;">
-            ${!isFirst ? `<button class="btn-secondary" style="flex:1" onclick="changePage(-1)">Back</button>` : ""}
-            <button class="btn-primary" style="flex:2" onclick="${isLast ? 'exitSlides()' : 'changePage(1)'}">${isLast ? 'Restart' : 'Continue'}</button>
-        </div>`;
-}
-
-function changePage(n) { index += n; render(); }
-
-function startAppFromHome() {
-    document.getElementById('home-dashboard').classList.add('hidden');
-    document.getElementById('main-slides').classList.remove('hidden');
-    if(music) music.play();
-    if(audioBtn) audioBtn.innerText = "🔊";
-    index = 0; render();
-}
-
-function exitSlides() {
-    document.getElementById('home-dashboard').classList.remove('hidden');
-    document.getElementById('main-slides').classList.add('hidden');
-}
-
-function toggleTheme() {
-    const body = document.body;
-    const btn = document.getElementById('theme-toggle');
-    body.classList.toggle('day-mode');
-    if (body.classList.contains('day-mode')) {
-        btn.innerHTML = "🌙 Night Mode";
-        localStorage.setItem('theme', 'day');
-    } else {
-        btn.innerHTML = "☀️ Day Mode";
-        localStorage.setItem('theme', 'night');
-    }
-}
-
-window.onload = () => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'day') {
-        document.body.classList.add('day-mode');
-        const themeBtn = document.getElementById('theme-toggle');
-        if(themeBtn) themeBtn.innerHTML = "🌙 Night Mode";
-    }
-    updateMiniSurahWidget(); // Ensure it runs on load
-};
-
-function updateCountdown() {
-    const ramadanDate = new Date("February 18, 2026 00:00:00").getTime();
-    const now = new Date().getTime();
-    const diff = ramadanDate - now;
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const countElem = document.getElementById("countdown");
-    if(countElem) countElem.innerHTML = diff > 0 ? `🌙 ${days} Days & ${hours} Hours until Ramadan` : "✨ Ramadan Kareem!";
-}
-setInterval(updateCountdown, 60000);
-updateCountdown();
-
-function showRandomDua() {
-    if(!dailyDuas.length) return;
-    const random = dailyDuas[Math.floor(Math.random() * dailyDuas.length)];
-    document.getElementById('dua-arabic').innerText = random.ar;
-    document.getElementById('dua-urdu').innerText = random.ur;
-}
-showRandomDua();
-
-function calculateZakat() {
-    const amount = document.getElementById('zakat-amount').value;
-    if (amount > 0) {
-        document.getElementById('zakat-value').innerText = (amount * 0.025).toLocaleString();
-        document.getElementById('zakat-result-box').classList.remove('hidden');
-    }
-}
-
-function countUp() { count++; document.getElementById('t-count').innerText = count; }
-function resetCount() { count = 0; document.getElementById('t-count').innerText = count; }
-
-function toggleAudio() {
-    if (music.paused) { music.play(); audioBtn.innerText = "🔊"; }
-    else { music.pause(); audioBtn.innerText = "🔇"; }
-}
-
-function openNamesGallery() {
-    const grid = document.getElementById('names-grid');
-    grid.innerHTML = '';
-    fullNamesList.forEach(item => {
-        grid.innerHTML += `<div class="name-box"><h3>${item.ar}</h3><p>${item.en}</p></div>`;
-    });
-    document.getElementById('names-gallery').classList.remove('hidden');
-    if(music) music.pause();
-    const nAudio = document.getElementById('namesAudio');
-    if(nAudio) nAudio.play();
-}
-
-function closeNamesGallery() {
-    document.getElementById('names-gallery').classList.add('hidden');
-    const nAudio = document.getElementById('namesAudio');
-    if(nAudio) nAudio.pause();
-}
-
-let currentHadithIndex = 0;
-function showNextHadith() {
-    if(!fortyHadith.length) return;
-    const h = fortyHadith[currentHadithIndex];
-    document.getElementById('hadith-no').innerText = `Hadith #${h.no} of 40`;
-    document.getElementById('hadith-ar').innerText = h.ar;
-    document.getElementById('hadith-ur').innerText = h.ur;
-    document.getElementById('hadith-ref').innerText = `[Ref: ${h.ref}]`;
-    currentHadithIndex = (currentHadithIndex + 1) % fortyHadith.length;
-}
-    
-const messages = [
-"کیا آج آپ قرآن نہیں پڑھیں گے؟",
-"کیا آپ جاننا چاہتے ہیں اللہ آج آپ کو کیا کہہ رہا ہے؟",
-"قرآن کو پسِ پشت مت ڈالیں، یہ آپ کی نجات کا ذریعہ ہے۔",
-"آج کی ایک چھوٹی سی سورت، آپ کے دن میں برکت کے لیے۔",
-"تھوڑا وقت نکالیں، قرآن سے اپنا رشتہ جوڑیں۔"
-];
-
-function updateMiniSurahWidget() {
-    const btn = document.getElementById('mini-surah-btn');
-    const textElem = document.getElementById('surah-reminder-text');
-    const today = new Date().toDateString();
-    const hasRead = localStorage.getItem('surah_read_today') === today;
-    
-    // FIXED: Corrected variable name from 'homeSection' to 'dashboard'
-    const dashboard = document.getElementById('home-dashboard');
-    if (dashboard && !dashboard.classList.contains('hidden')) {
-        btn.style.setProperty('display', 'block', 'important');
-    } else {
-        btn.style.setProperty('display', 'none', 'important');
-    }
-
-    if (hasRead) {
-        textElem.innerHTML = "Satisfaction ✅";
-    } else {
-        const randomMsg = messages[Math.floor(Math.random() * messages.length)] || "Read Surah";
-        textElem.innerHTML = randomMsg;
-    }
-} // FIXED: Missing closing bracket added here
-
-function makeDraggable(elementId) {
-    const el = document.getElementById(elementId);
-    if (!el) return;
-    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    el.onmousedown = function(e) {
-        e.preventDefault();
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        document.onmouseup = () => { document.onmouseup = null; document.onmousemove = null; };
-        document.onmousemove = (e) => {
-            e.preventDefault();
-            pos1 = pos3 - e.clientX;
-            pos2 = pos4 - e.clientY;
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            el.style.top = (el.offsetTop - pos2) + "px";
-            el.style.left = (el.offsetLeft - pos1) + "px";
-            el.style.bottom = "auto";
-            el.style.right = "auto";
-        };
-    };
-}
-
-function createStars() {
-    const container = document.getElementById('stars');
-    if(!container) return;
-    for (let i = 0; i < 80; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        const size = Math.random() * 3 + 1 + 'px';
-        star.style.width = size; star.style.height = size;
-        star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-        container.appendChild(star);
-    }
-}
-
-function shareApp() {
-    const text = "Check out this beautiful Ramadan Journey App! ✨ \n Link: " + window.location.href;
-    window.open("https://wa.me/?text=" + encodeURIComponent(text), '_blank');
-}
-
-document.addEventListener('mousemove', (e) => {
-    const bg = document.querySelector('.parallax-bg');
-    if(bg) {
-        const x = (window.innerWidth - e.pageX * 2) / 90;
-        const y = (window.innerHeight - e.pageY * 2) / 90;
-        bg.style.transform = `translateX(${x}px) translateY(${y}px)`;
-    }
-});
-// Parallax
-document.addEventListener('mousemove', (e) => {
-    const bg = document.querySelector('.parallax-bg');
-    if(bg) {
-        const x = (window.innerWidth - e.pageX * 2) / 90;
-        const y = (window.innerHeight - e.pageY * 2) / 90;
-        bg.style.transform = `translateX(${x}px) translateY(${y}px)`;
-    }
-});
-
-// Init
-
-createStars();
-const taskIndex = Math.floor(Math.random() * ramadanTasks.length);
-document.getElementById('daily-task-text').innerText = ramadanTasks[taskIndex];
-function markTaskDone() { 
-    const b = document.getElementById('task-btn');
-    b.innerText = "Completed ✅ !ما شاء الله"; b.style.background = "#44ff44"; b.disabled = true;
-}
-    
 const surahData = {
     yaseen: { title: "Surah Yaseen",
      content: [
@@ -1734,6 +1506,235 @@ kafirun: {
     ]
 }
 };
+    const messages = [
+"کیا آج آپ قرآن نہیں پڑھیں گے؟",
+"کیا آپ جاننا چاہتے ہیں اللہ آج آپ کو کیا کہہ رہا ہے؟",
+"قرآن کو پسِ پشت مت ڈالیں، یہ آپ کی نجات کا ذریعہ ہے۔",
+"آج کی ایک چھوٹی سی سورت، آپ کے دن میں برکت کے لیے۔",
+"تھوڑا وقت نکالیں، قرآن سے اپنا رشتہ جوڑیں۔"
+];
+
+let index = 0;
+let count = 0;
+const music = document.getElementById('bgMusic');
+const audioBtn = document.getElementById('audioBtn');
+
+function render() {
+    const p = pages[index];
+    if(!p) return; // Guard clause
+    const isLast = index === pages.length - 1;
+    const isFirst = index === 0;
+    document.getElementById("bar").style.width = `${((index + 1) / pages.length) * 100}%`;
+    document.getElementById("content").innerHTML = `
+        <small style="color:var(--gold)">STEP ${index + 1} OF ${pages.length}</small>
+        <h2 style="margin: 15px 0;">${p.title}</h2>
+        ${p.arabic ? `<div class="arabic">${p.arabic}</div>` : ""}
+        ${p.urdu ? `<div class="urdu">${p.urdu}</div>` : ""}
+        <p style="font-size:14px; opacity:0.9;">${p.body}</p>
+        <div style="display:flex; gap:10px; margin-top:20px;">
+            ${!isFirst ? `<button class="btn-secondary" style="flex:1" onclick="changePage(-1)">Back</button>` : ""}
+            <button class="btn-primary" style="flex:2" onclick="${isLast ? 'exitSlides()' : 'changePage(1)'}">${isLast ? 'Restart' : 'Continue'}</button>
+        </div>`;
+}
+
+function changePage(n) { index += n; render(); }
+
+function startAppFromHome() {
+    document.getElementById('home-dashboard').classList.add('hidden');
+    document.getElementById('main-slides').classList.remove('hidden');
+    if(music) music.play();
+    if(audioBtn) audioBtn.innerText = "🔊";
+    index = 0; render();
+}
+
+function exitSlides() {
+    document.getElementById('home-dashboard').classList.remove('hidden');
+    document.getElementById('main-slides').classList.add('hidden');
+}
+
+function toggleTheme() {
+    const body = document.body;
+    const btn = document.getElementById('theme-toggle');
+    body.classList.toggle('day-mode');
+    if (body.classList.contains('day-mode')) {
+        btn.innerHTML = "🌙 Night Mode";
+        localStorage.setItem('theme', 'day');
+    } else {
+        btn.innerHTML = "☀️ Day Mode";
+        localStorage.setItem('theme', 'night');
+    }
+}
+
+window.onload = () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'day') {
+        document.body.classList.add('day-mode');
+        const themeBtn = document.getElementById('theme-toggle');
+        if(themeBtn) themeBtn.innerHTML = "🌙 Night Mode";
+    }
+    updateMiniSurahWidget(); // Ensure it runs on load
+};
+
+function updateCountdown() {
+    const ramadanDate = new Date("February 18, 2026 00:00:00").getTime();
+    const now = new Date().getTime();
+    const diff = ramadanDate - now;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const countElem = document.getElementById("countdown");
+    if(countElem) countElem.innerHTML = diff > 0 ? `🌙 ${days} Days & ${hours} Hours until Ramadan` : "✨ Ramadan Kareem!";
+}
+setInterval(updateCountdown, 60000);
+updateCountdown();
+
+function showRandomDua() {
+    if(!dailyDuas.length) return;
+    const random = dailyDuas[Math.floor(Math.random() * dailyDuas.length)];
+    document.getElementById('dua-arabic').innerText = random.ar;
+    document.getElementById('dua-urdu').innerText = random.ur;
+}
+showRandomDua();
+
+function calculateZakat() {
+    const amount = document.getElementById('zakat-amount').value;
+    if (amount > 0) {
+        document.getElementById('zakat-value').innerText = (amount * 0.025).toLocaleString();
+        document.getElementById('zakat-result-box').classList.remove('hidden');
+    }
+}
+
+function countUp() { count++; document.getElementById('t-count').innerText = count; }
+function resetCount() { count = 0; document.getElementById('t-count').innerText = count; }
+
+function toggleAudio() {
+    if (music.paused) { music.play(); audioBtn.innerText = "🔊"; }
+    else { music.pause(); audioBtn.innerText = "🔇"; }
+}
+
+function openNamesGallery() {
+    const grid = document.getElementById('names-grid');
+    grid.innerHTML = '';
+    fullNamesList.forEach(item => {
+        grid.innerHTML += `<div class="name-box"><h3>${item.ar}</h3><p>${item.en}</p></div>`;
+    });
+    document.getElementById('names-gallery').classList.remove('hidden');
+    if(music) music.pause();
+    const nAudio = document.getElementById('namesAudio');
+    if(nAudio) nAudio.play();
+}
+
+function closeNamesGallery() {
+    document.getElementById('names-gallery').classList.add('hidden');
+    const nAudio = document.getElementById('namesAudio');
+    if(nAudio) nAudio.pause();
+}
+
+let currentHadithIndex = 0;
+function showNextHadith() {
+    if(!fortyHadith.length) return;
+    const h = fortyHadith[currentHadithIndex];
+    document.getElementById('hadith-no').innerText = `Hadith #${h.no} of 40`;
+    document.getElementById('hadith-ar').innerText = h.ar;
+    document.getElementById('hadith-ur').innerText = h.ur;
+    document.getElementById('hadith-ref').innerText = `[Ref: ${h.ref}]`;
+    currentHadithIndex = (currentHadithIndex + 1) % fortyHadith.length;
+}
+    
+
+function updateMiniSurahWidget() {
+    const btn = document.getElementById('mini-surah-btn');
+    const textElem = document.getElementById('surah-reminder-text');
+    const today = new Date().toDateString();
+    const hasRead = localStorage.getItem('surah_read_today') === today;
+    
+    // FIXED: Corrected variable name from 'homeSection' to 'dashboard'
+    const dashboard = document.getElementById('home-dashboard');
+    if (dashboard && !dashboard.classList.contains('hidden')) {
+        btn.style.setProperty('display', 'block', 'important');
+    } else {
+        btn.style.setProperty('display', 'none', 'important');
+    }
+
+    if (hasRead) {
+        textElem.innerHTML = "Satisfaction ✅";
+    } else {
+        const randomMsg = messages[Math.floor(Math.random() * messages.length)] || "Read Surah";
+        textElem.innerHTML = randomMsg;
+    }
+} // FIXED: Missing closing bracket added here
+
+function makeDraggable(elementId) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    el.onmousedown = function(e) {
+        e.preventDefault();
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = () => { document.onmouseup = null; document.onmousemove = null; };
+        document.onmousemove = (e) => {
+            e.preventDefault();
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            el.style.top = (el.offsetTop - pos2) + "px";
+            el.style.left = (el.offsetLeft - pos1) + "px";
+            el.style.bottom = "auto";
+            el.style.right = "auto";
+        };
+    };
+}
+
+function createStars() {
+    const container = document.getElementById('stars');
+    if(!container) return;
+    for (let i = 0; i < 80; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        const size = Math.random() * 3 + 1 + 'px';
+        star.style.width = size; star.style.height = size;
+        star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+        container.appendChild(star);
+    }
+}
+
+function shareApp() {
+    const text = "Check out this beautiful Ramadan Journey App! ✨ \n Link: " + window.location.href;
+    window.open("https://wa.me/?text=" + encodeURIComponent(text), '_blank');
+}
+
+document.addEventListener('mousemove', (e) => {
+    const bg = document.querySelector('.parallax-bg');
+    if(bg) {
+        const x = (window.innerWidth - e.pageX * 2) / 90;
+        const y = (window.innerHeight - e.pageY * 2) / 90;
+        bg.style.transform = `translateX(${x}px) translateY(${y}px)`;
+    }
+});
+// Parallax
+document.addEventListener('mousemove', (e) => {
+    const bg = document.querySelector('.parallax-bg');
+    if(bg) {
+        const x = (window.innerWidth - e.pageX * 2) / 90;
+        const y = (window.innerHeight - e.pageY * 2) / 90;
+        bg.style.transform = `translateX(${x}px) translateY(${y}px)`;
+    }
+});
+
+// Init
+
+createStars();
+const taskIndex = Math.floor(Math.random() * ramadanTasks.length);
+document.getElementById('daily-task-text').innerText = ramadanTasks[taskIndex];
+function markTaskDone() { 
+    const b = document.getElementById('task-btn');
+    b.innerText = "Completed ✅ !ما شاء الله"; b.style.background = "#44ff44"; b.disabled = true;
+}
+    
+
 
   
 
@@ -1812,6 +1813,7 @@ function closeSurah() {
 </script>
 </body>
 </html>
+
 
 
 
