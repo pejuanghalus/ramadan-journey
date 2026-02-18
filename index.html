@@ -862,9 +862,21 @@
                         <h3>40 Hadith</h3>
                         <p>Collection of authentic narrations</p>
                     </div>
-                    <div class="card quran-full-card" onclick="openQuranMenu()">
-                       <h3>📖 Complete Quran</h3>
-                      <p>Read by Surah or Juz (Parah)</p>
+                   <div class="feature-card" onclick="openQuranSelection()">
+    <div class="card-icon">📖</div>
+    <h3>Complete Quran</h3>
+    <p>Read by Surah or Juz (Parah)</p>
+</div>
+
+<div id="quran-selection-overlay" class="overlay" style="display:none;">
+    <div class="modal">
+        <h3>Select Reading Mode</h3>
+        <div class="selection-box">
+            <button class="btn-primary" onclick="selectQuranMode('surah')">Read by Surah</button>
+            <button class="btn-primary" onclick="selectQuranMode('juz')">Read by Juz (Parah)</button>
+        </div>
+        <button class="btn-secondary" onclick="closeQuranSelection()" style="margin-top:20px;">Close</button>
+    </div>
 </div>
                 </div>
             </div>
@@ -2537,6 +2549,7 @@ setInterval(updateMiniSurahWidget, 60000); // Every minute
 </body>
 </html>
 Done
+
 
 
 
