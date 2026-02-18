@@ -2135,82 +2135,79 @@ function openQuranSelection() {
 
 // 2. Mode aur Translation choose karne ka logic
 // Global variable user ki choice yaad rakhne ke liye
-let isTranslationEnabled = false;
+// Global variable
+window.isTranslationEnabled = false;
 
-function selectQuranMode(mode) {
-    // 1. Translation ki choice puchen
-    isTranslationEnabled = confirm("Urdu Tarjuma ke sath parhna chahte hain?\n(OK = Tarjuma ke sath, Cancel = Sirf Arabic)");
+// 1. Selection Mode Function
+window.selectQuranMode = function(mode) {
+    window.isTranslationEnabled = confirm("Urdu Tarjuma ke sath parhna chahte hain?\n(OK = Tarjuma, Cancel = Arabic Only)");
     
     const listContainer = document.getElementById('quran-list-container');
     const dynamicList = document.getElementById('quran-dynamic-list');
     
-    // Check karein ke list container HTML mein hai ya nahi
     if (!listContainer || !dynamicList) {
-        alert("Ghalati: HTML mein 'quran-list-container' ya 'quran-dynamic-list' missing hai!");
+        alert("Ghalati: HTML mein list container nahi mila!");
         return;
     }
 
-    // 2. UI update karein (Buttons chhupayen aur list dikhayen)
     listContainer.style.display = 'block';
-    dynamicList.innerHTML = "<li style='color:gold; text-align:center; padding:20px;'>Loading... Please wait.</li>";
+    dynamicList.innerHTML = "<li style='color:gold; text-align:center; padding:20px;'>Loading...</li>";
 
-    // 3. API se Data mangwana (Async function call)
-    loadQuranData(mode, dynamicList);
-}
+    window.loadQuranData(mode, dynamicList);
+};
 
-// Ye naya function list load karne ke liye alag se add karein
-async function loadQuranData(mode, container) {
+// 2. Load List Function
+window.loadQuranData = async function(mode, container) {
     try {
         if (mode === 'surah') {
             const response = await fetch('https://api.alquran.cloud/v1/surah');
             const data = await response.json();
             
             container.innerHTML = data.data.map(surah => `
-                <li onclick="fetchFullSurah(${surah.number})" style="padding:12px; border-bottom:1px solid rgba(255,215,0,0.1); cursor:pointer; color:white; display:flex; justify-content:space-between; align-items:center;">
+                <li onclick="fetchFullSurah(${surah.number})" style="padding:12px; border-bottom:1px solid rgba(255,215,0,0.1); cursor:pointer; color:white; display:flex; justify-content:space-between;">
                     <span><strong style="color:gold;">${surah.number}.</strong> ${surah.englishName}</span>
-                    <span style="font-family: 'Amiri', serif; font-size:18px;">${surah.name}</span>
+                    <span style="font-family:serif;">${surah.name}</span>
                 </li>
             `).join('');
         } else {
-            // 30 Juz ki list
             let juzHTML = "";
             for(let i=1; i<=30; i++) {
-                juzHTML += `
-                <li onclick="fetchFullJuz(${i})" style="padding:12px; border-bottom:1px solid rgba(255,215,0,0.1); cursor:pointer; color:white;">
-                    <span style="color:gold;">Para ${i}</span> - Juz ${i}
-                </li>`;
+                juzHTML += `<li onclick="fetchFullJuz(${i})" style="padding:12px; border-bottom:1px solid rgba(255,215,0,0.1); cursor:pointer; color:white;">Para ${i}</li>`;
             }
             container.innerHTML = juzHTML;
         }
     } catch (error) {
-        container.innerHTML = "<li style='color:#ff4444; text-align:center;'>Internet Error! List load nahi ho saki.</li>";
+        container.innerHTML = "<li style='color:red;'>Internet Connection Check Karein!</li>";
     }
-}
- async function fetchFullSurah(number) {
-    closeQuranSelection();
-    // Apne purane reader ko loading state mein dikhayein
-    document.getElementById('surah-reader').style.display = 'block';
-    document.getElementById('surah-content').innerHTML = "<p style='color:white; text-align:center;'>Loading Quran Verses...</p>";
+};
 
-    // Agar translation chahiye to edition 'ur.jalandhry' use hoga, warna 'quran-uthmani'
-    const edition = isTranslationEnabled ? 'ur.jalandhry' : 'quran-simple';
+// 3. Fetch Full Surah (API Version)
+window.fetchFullSurah = async function(number) {
+    if(typeof closeQuranSelection === "function") closeQuranSelection();
+    
+    const reader = document.getElementById('surah-reader');
+    const content = document.getElementById('surah-content');
+    
+    if(reader) reader.style.display = 'block';
+    if(content) content.innerHTML = "<p style='color:white; text-align:center;'>Loading Ayahs...</p>";
+
+    const edition = window.isTranslationEnabled ? 'ur.jalandhry' : 'quran-simple';
     
     try {
         const res = await fetch(`https://api.alquran.cloud/v1/surah/${number}/${edition}`);
         const data = await res.json();
         
-        // Reader mein data fill karna
         document.getElementById('reader-title').innerText = data.data.englishName;
-        document.getElementById('surah-content').innerHTML = data.data.ayahs.map(ayah => `
+        content.innerHTML = data.data.ayahs.map(ayah => `
             <div style="margin-bottom:30px; text-align:center;">
                 <p style="font-size:24px; direction:rtl; color:white;">${ayah.text}</p>
                 <div style="width:50px; height:1px; background:gold; margin:10px auto;"></div>
             </div>
         `).join('');
     } catch (e) {
-        alert("Verses load nahi ho sakin!");
+        alert("Data load nahi ho saka!");
     }
-}   
+};   
 // =====================================================
 // COUNTDOWN TIMER
 // =====================================================
