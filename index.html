@@ -862,6 +862,10 @@
                         <h3>40 Hadith</h3>
                         <p>Collection of authentic narrations</p>
                     </div>
+                    <div class="card quran-full-card" onclick="openQuranMenu()">
+                       <h3>📖 Complete Quran</h3>
+                      <p>Read by Surah or Juz (Parah)</p>
+</div>
                 </div>
             </div>
         </section>
@@ -2100,7 +2104,23 @@ kafirun: {
     }
 };
 
-// =====================================================
+// Global state user ki choice store karne ke liye
+let quranChoice = {
+    mode: 'surah', // surah or juz
+    style: 'both'  // both or arabic_only
+};
+
+function openQuranMenu() {
+    // Aik naya overlay khulega jisme buttons honge:
+    // [ Read by Surah ]  [ Read by Juz ]
+    showQuranSelectionStep1(); 
+}
+
+function setQuranStyle(style) {
+    quranChoice.style = style;
+    // Ab user ko actual Quran reader par le jayenge
+    loadQuranData();
+}// =====================================================
 // COUNTDOWN TIMER
 // =====================================================
 
@@ -2517,6 +2537,7 @@ setInterval(updateMiniSurahWidget, 60000); // Every minute
 </body>
 </html>
 Done
+
 
 
 
