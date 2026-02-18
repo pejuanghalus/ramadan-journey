@@ -868,13 +868,16 @@
     <p>Read by Surah or Juz (Parah)</p>
 </div>
 
-<div id="quran-selection-overlay" class="overlay" style="display:none;">
-    <div class="modal">
-        <h3>Select Reading Mode</h3>
-        <div class="selection-box">
-            <button class="btn-primary" onclick="selectQuranMode('surah')">Read by Surah</button>
-            <button class="btn-primary" onclick="selectQuranMode('juz')">Read by Juz (Parah)</button>
+                    <div id="quran-selection-overlay" class="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; align-items:center; justify-content:center;">
+    <div style="background:var(--card-bg, #1e1e1e); padding:30px; border-radius:15px; text-align:center; border:1px solid var(--gold);">
+        <h3 style="color:var(--gold);">Select Reading Mode</h3>
+        <p style="margin-bottom:20px;">How would you like to explore the Quran?</p>
+        
+        <div style="display:flex; gap:10px; flex-direction:column;">
+            <button class="btn-primary" onclick="selectQuranMode('surah')">📖 Read by Surah</button>
+            <button class="btn-primary" onclick="selectQuranMode('juz')">🔢 Read by Juz (Parah)</button>
         </div>
+        
         <button class="btn-secondary" onclick="closeQuranSelection()" style="margin-top:20px;">Close</button>
     </div>
 </div>
@@ -2567,6 +2570,7 @@ setInterval(updateMiniSurahWidget, 60000); // Every minute
 </body>
 </html>
 Done
+
 
 
 
