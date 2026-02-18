@@ -862,7 +862,7 @@
                         <h3>40 Hadith</h3>
                         <p>Collection of authentic narrations</p>
                     </div>
-                   <div class="feature-card" onclick="openQuranSelection()">
+                  <div class="feature-card" id="quranCardTrigger">
     <div class="card-icon">📖</div>
     <h3>Complete Quran</h3>
     <p>Read by Surah or Juz (Parah)</p>
@@ -2116,23 +2116,41 @@ kafirun: {
     }
 };
 
-// Global state user ki choice store karne ke liye
-let quranChoice = {
-    mode: 'surah', // surah or juz
-    style: 'both'  // both or arabic_only
-};
-
-function openQuranMenu() {
-    // Aik naya overlay khulega jisme buttons honge:
-    // [ Read by Surah ]  [ Read by Juz ]
-    showQuranSelectionStep1(); 
+// 1. Quran Selection ka function define karein
+function openQuranSelection() {
+    // Selection Overlay banayein (Ya agar pehle se hai to show karein)
+    const overlay = document.getElementById('quran-selection-overlay');
+    if (overlay) {
+        overlay.style.display = 'flex';
+    } else {
+        alert("Quran Selection Modal missing in HTML!");
+    }
 }
 
-function setQuranStyle(style) {
-    quranChoice.style = style;
-    // Ab user ko actual Quran reader par le jayenge
-    loadQuranData();
-}// =====================================================
+// 2. Mode aur Translation choose karne ka logic
+function selectQuranMode(mode) {
+    const style = confirm("Urdu Tarjuma ke sath parhna chahte hain?\n(OK = Tarjuma ke sath, Cancel = Sirf Arabic)");
+    
+    if (mode === 'surah') {
+        alert(style ? "Surah List (With Translation) Loading..." : "Surah List (Arabic Only) Loading...");
+        // Yahan hum API call karenge
+    } else {
+        alert(style ? "Juz/Para List (With Translation) Loading..." : "Juz/Para List (Arabic Only) Loading...");
+    }
+    closeQuranSelection();
+}
+
+function closeQuranSelection() {
+    document.getElementById('quran-selection-overlay').style.display = 'none';
+}
+
+// 3. EVENT LISTENER: Ye sab se zaroori hai (Fixes the ReferenceError)
+document.addEventListener('DOMContentLoaded', () => {
+    const quranBtn = document.getElementById('quranCardTrigger');
+    if (quranBtn) {
+        quranBtn.addEventListener('click', openQuranSelection);
+    }
+});// =====================================================
 // COUNTDOWN TIMER
 // =====================================================
 
@@ -2549,6 +2567,7 @@ setInterval(updateMiniSurahWidget, 60000); // Every minute
 </body>
 </html>
 Done
+
 
 
 
